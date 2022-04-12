@@ -20,9 +20,14 @@ class UserFactory extends Factory
         return [
             'name' => $this->faker->name(),
             'email' => $this->faker->unique()->safeEmail(),
-            'email_verified_at' => now(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-            'remember_token' => Str::random(10),
+            // 'picture' => $this->faker->image(public_path('images'), 150, 150),
+            'picture' => "https://source.unsplash.com/random/200x200?portrait",
+            'phone_number' => $this->faker->phone(),
+            'birthdate' => $this->faker->date($format = 'Y-m-d', $max = 'now'),
+            'gender' => $this->faker->randomElement($array = array('male','female','others')),
+            'membership' => $this->faker->randomElement($array = array('yes','no')),
+            'ltv' => $this->faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 999999),
+            'last_visit' => $this->faker->dateTime($max = 'now', $timezone = null)
         ];
     }
 
@@ -31,12 +36,12 @@ class UserFactory extends Factory
      *
      * @return static
      */
-    public function unverified()
-    {
-        return $this->state(function (array $attributes) {
-            return [
-                'email_verified_at' => null,
-            ];
-        });
-    }
+    // public function unverified()
+    // {
+    //     return $this->state(function (array $attributes) {
+    //         return [
+    //             'email_verified_at' => null,
+    //         ];
+    //     });
+    // }
 }
