@@ -13,6 +13,26 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+//LIST OF CUSTOMERS (HOMEPAGE)
+Route::get('/dashboard', function () {
+    return view('welcome');
+});
+Route::get('/appointments', function () {
+    return view('welcome');
+});
+Route::get('/customers', function () {
+    return view('welcome');
+});
+Route::get('/finances', function () {
+    return view('welcome');
+});
+Route::get('/reports', function () {
+    return view('welcome');
+});
+Route::get('/settings', function () {
+    return view('welcome');
+});
 Route::get('/', function () {
     return view('welcome');
 });

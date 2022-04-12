@@ -1,8 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
 import AppRoutes from "./routes";
 import { UserStorage } from "./store/UserContext";
-import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
     return (
