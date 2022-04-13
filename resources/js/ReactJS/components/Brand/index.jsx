@@ -3,7 +3,7 @@ import { Dropdown, Pipe } from "./style";
 
 const Brand = () => {
     return (
-        <Dropdown class="dropdown">
+        <Dropdown className="dropdown">
             <div className="pipes">
                 <Pipe opacity={0.25} />
                 <Pipe opacity={0.5} />
@@ -11,7 +11,7 @@ const Brand = () => {
                 <Pipe opacity={1} />
             </div>
             <button
-                class="btn btn-link dropdown-toggle btn-sm d-flex align-items-center col-auto"
+                className="btn btn-link dropdown-toggle btn-sm d-flex align-items-center col-auto"
                 type="button"
                 id="dropdownMenuButton1"
                 data-bs-toggle="dropdown"
@@ -20,22 +20,22 @@ const Brand = () => {
                 <h1>STUDIO 813</h1>
             </button>
             <span>Adalberto Teixeira</span>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+            <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                 <li>
-                    <a class="dropdown-item" href="#">
+                    <a className="dropdown-item" href="#">
                         Site
                     </a>
                 </li>
                 <li>
-                    <a class="dropdown-item" href="#">
+                    <a className="dropdown-item" href="#">
                         Profile
                     </a>
                 </li>
                 <li>
-                    <hr class="dropdown-divider" />
+                    <hr className="dropdown-divider" />
                 </li>
                 <li>
-                    <a class="dropdown-item" href="#">
+                    <a className="dropdown-item" href="#">
                         Logout
                     </a>
                 </li>

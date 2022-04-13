@@ -20,10 +20,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 //LIST OF CUSTOMERS (HOMEPAGE)
-Route::get('/dashboard', [UserController::class, 'index'])->name('dashboard');
-Route::get('/appointments', [UserController::class, 'index'])->name('appointments');
-Route::get('/customers', [UserController::class, 'index'])->name('customers');
-Route::get('/finances', [UserController::class, 'index'])->name('finances');
-Route::get('/reports', [UserController::class, 'index'])->name('reports');
-Route::get('/settings', [UserController::class, 'index'])->name('settings');
 Route::get('/', [UserController::class, 'index'])->name('home');

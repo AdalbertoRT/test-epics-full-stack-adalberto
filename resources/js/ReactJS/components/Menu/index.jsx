@@ -7,11 +7,11 @@ import { faUsers } from "@fortawesome/free-solid-svg-icons";
 import { faCreditCard } from "@fortawesome/free-solid-svg-icons";
 import { faSignal } from "@fortawesome/free-solid-svg-icons";
 import { faGear } from "@fortawesome/free-solid-svg-icons";
-import { faPhone } from "@fortawesome/free-solid-svg-icons";
+
 import { faUserPen } from "@fortawesome/free-solid-svg-icons";
 import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
 import { faMargnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-import { faEllipsis } from "@fortawesome/free-solid-svg-icons";
+
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { NavLink } from "react-router-dom";
 
