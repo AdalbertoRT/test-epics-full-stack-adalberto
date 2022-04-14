@@ -13,3 +13,20 @@
     background-color: lightblue !important;
     padding: 10px;
 }
+
+.modalEffect {
+    animation: modal 0.5s linear;
+    position: absolute;
+    left: 25%;
+}
+
+@keyframes modal {
+    from {
+        transform: translate3d(-50%, -50%, 0);
+        opacity: 0.1;
+    }
+    to {
+        transform: translate3d(0, 0, 0);
+        opacity: 1;
+    }
+}

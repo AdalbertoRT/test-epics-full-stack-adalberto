@@ -19,7 +19,7 @@ const Brand = () => {
             >
                 <h1>STUDIO 813</h1>
             </button>
-            <span>Adalberto Teixeira</span>
+            <span>YogaPlanner</span>
             <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                 <li>
                     <a className="dropdown-item" href="#">
