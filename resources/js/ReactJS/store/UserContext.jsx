@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import formatUrl from "../helpers/formatUrl";
 
 export const UserContext = React.createContext();
 
@@ -9,7 +10,9 @@ export const UserStorage = ({ children }) => {
     const fetchCustomers = async () => {
         setLoading(true);
         try {
-            const response = await fetch("http://localhost/api/");
+            const response = await fetch(
+                formatUrl(process.env.MIX_API_URL) + "/api/"
+            );
             const json = await response.json();
             setCustomers(json);
         } catch (error) {
