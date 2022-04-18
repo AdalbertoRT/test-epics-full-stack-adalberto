@@ -16,12 +16,12 @@ const Home = () => {
     }, []);
 
     return (
-        <C.HomeContainer className="container m-auto p-2 bg-white rounded row">
-            <C.HomeAside className="col-3">
+        <C.HomeContainer className="container d-flex m-auto p-2 bg-white rounded">
+            <C.HomeAside className="flex-fill">
                 <Brand />
                 <Menu />
             </C.HomeAside>
-            <C.HomeMain className="col-9 rounded p-2">
+            <C.HomeMain className="flex-fill rounded p-2">
                 <C.HomeCards className="mb-2">
                     <Cards />
                 </C.HomeCards>

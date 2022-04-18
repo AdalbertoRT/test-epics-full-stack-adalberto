@@ -20,7 +20,8 @@ export const HeaderListContainer = styled.div`
         color: #333;
     }
 
-    button {
+    button,
+    a {
         height: 25px;
         font-size: 0.6rem;
         color: #333;

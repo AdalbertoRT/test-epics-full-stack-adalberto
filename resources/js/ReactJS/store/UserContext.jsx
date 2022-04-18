@@ -61,11 +61,9 @@ export const UserStorage = ({ children }) => {
         setLoading(false);
     };
 
-    /*
     useEffect(() => {
         fetchCustomers();
     }, []);
-    */
 
     return (
         <UserContext.Provider

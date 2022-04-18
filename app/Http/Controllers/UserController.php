@@ -20,6 +20,7 @@ class UserController extends Controller
         $customers = User::simplePaginate(13);
 
         $array['customers'] = $customers->items();
+        $array['countCustomers'] = $this->countCustomers();
 
         return $array;
     }
@@ -48,6 +49,7 @@ class UserController extends Controller
         $customer = User::where('id', $id)->get();
 
         $array['customer'] = $customer;
+        $array['countCustomers'] = $this->countCustomers();
 
         return $array;
     }
@@ -58,6 +60,7 @@ class UserController extends Controller
 
         $customer = User::where('name', 'like', '%' . $name . '%')->get();
         $array['customers'] = $customer;
+        $array['countCustomers'] = $this->countCustomers();
 
         return $array;
     }
@@ -69,6 +72,7 @@ class UserController extends Controller
         $customer = User::where('membership', $member)->get();
 
         $array['customers'] = $customer;
+        $array['countCustomers'] = $this->countCustomers();
 
         return $array;
     }
@@ -94,5 +98,13 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function countCustomers()
+    {
+        $total = User::count();
+        $members = User::where('membership', 'yes')->count();
+        $array = ['total' => $total, 'members' => $members];
+        return $array;
     }
 }

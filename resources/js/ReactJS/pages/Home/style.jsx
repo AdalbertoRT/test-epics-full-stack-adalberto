@@ -1,14 +1,18 @@
 import styled from "styled-components";
 
-export const HomeContainer = styled.section``;
+export const HomeContainer = styled.section`
+    position: relative;
+    min-height: 90vh;
+    overflow: hidden;
+`;
 
-export const HomeAside = styled.aside``;
-
-export const HomeMenu = styled.ul``;
+export const HomeAside = styled.aside`
+    position: relative;
+    height: 400px;
+`;
 
 export const HomeMain = styled.main`
     background-color: lightblue;
-    height: 100%;
 `;
 
 export const HomeCards = styled.div`

@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
@@ -58,13 +58,14 @@ const HeaderList = () => {
                     <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
                     <span className="col-auto">Export</span>
                 </button>
-                <button
+                <Link
+                    to="/customers/add"
                     type="button"
                     className="new btn btn-sm btn-light rounded p-0 px-1 shadow-sm d-flex gap-1 align-items-center"
                 >
                     <FontAwesomeIcon icon={faPlus} />
                     <span className="col-auto">New Customer</span>
-                </button>
+                </Link>
             </div>
         </HeaderListContainer>
     );

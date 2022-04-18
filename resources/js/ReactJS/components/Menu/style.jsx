@@ -1,5 +1,10 @@
 import styled from "styled-components";
 
+export const Aside = styled.div`
+    position: relative;
+    height: 100%;
+`;
+
 export const MenuComponent = styled.ul`
     position: relative;
     width: 100%;
@@ -18,6 +23,7 @@ export const MenuItem = styled.li`
     a {
         text-decoration: none;
         color: #333;
+        margin: 0;
         &.active {
             background-color: transparent !important;
             color: tomato !important;

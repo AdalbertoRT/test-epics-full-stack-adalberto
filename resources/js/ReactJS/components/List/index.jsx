@@ -18,7 +18,7 @@ const CustomersTable = () => {
         console.log(data);
     }, [customers]);
 
-    if (loading || data.customers.length == 0)
+    if (loading || data?.customers.length == 0)
         return (
             <div className="w-100 d-flex align-items-center justify-content-center">
                 <Loader className="m-3" />

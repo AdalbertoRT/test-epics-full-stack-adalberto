@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Dropdown = styled.div`
-    margin-left: -20px;
+    margin-left: -10px;
     display: grid;
     grid-template-columns: 50px 2fr;
     grid-template-rows: 1fr 1fr;
