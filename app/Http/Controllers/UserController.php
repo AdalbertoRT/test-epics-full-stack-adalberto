@@ -13,6 +13,7 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
+
     {
         $array = ['error' => ''];
 
@@ -40,9 +41,36 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function showCustomerById($id)
     {
-        //
+        $array = ['error' => ''];
+
+        $customer = User::where('id', $id)->get();
+
+        $array['customer'] = $customer;
+
+        return $array;
+    }
+
+    public function showCustomerByName($name)
+    {
+        $array = ['error' => ''];
+
+        $customer = User::where('name', 'like', '%' . $name . '%')->get();
+        $array['customers'] = $customer;
+
+        return $array;
+    }
+
+    public function showCustomerByMembers($member)
+    {
+        $array = ['error' => ''];
+
+        $customer = User::where('membership', $member)->get();
+
+        $array['customers'] = $customer;
+
+        return $array;
     }
 
     /**

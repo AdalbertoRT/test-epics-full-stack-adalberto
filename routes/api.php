@@ -19,5 +19,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+//DATA OF CUSTOMER BY ID
+Route::get('/customers/{id}', [UserController::class, 'showCustomerById'])->name('showById');
+
+//DATA OF CUSTOMER BY NAME
+Route::get('/customers/name/{name}', [UserController::class, 'showCustomerByName'])->name('showByName');
+
+//DATA OF CUSTOMER BY MEMBERSHIP
+Route::get('/members/{member}', [UserController::class, 'showCustomerByMembers'])->name('showByMembership');
+
 //LIST OF CUSTOMERS (HOMEPAGE)
 Route::get('/', [UserController::class, 'index'])->name('home');

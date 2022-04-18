@@ -1,17 +1,19 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../store/UserContext";
 import * as C from "./style";
 
 import Menu from "../../components/Menu";
 import Brand from "../../components/Brand";
 import List from "../../components/List";
+import HeaderList from "../../components/HeaderList";
+import Cards from "../../components/Cards";
 
 const Home = () => {
-    const { loading, customers } = useContext(UserContext);
+    const { fetchCustomers, customers } = useContext(UserContext);
 
-    // useEffect(() => {
-    //     console.log(customers);
-    // }, [customers]);
+    useEffect(() => {
+        fetchCustomers();
+    }, []);
 
     return (
         <C.HomeContainer className="container m-auto p-2 bg-white rounded row">
@@ -20,9 +22,12 @@ const Home = () => {
                 <Menu />
             </C.HomeAside>
             <C.HomeMain className="col-9 rounded p-2">
-                <C.HomeCards className="p-2">CARDS</C.HomeCards>
+                <C.HomeCards className="mb-2">
+                    <Cards />
+                </C.HomeCards>
                 <C.HomeList className="bg-white rounded p-2">
-                    {customers && <List data={customers} />}
+                    <HeaderList />
+                    {customers && <List />}
                 </C.HomeList>
             </C.HomeMain>
         </C.HomeContainer>

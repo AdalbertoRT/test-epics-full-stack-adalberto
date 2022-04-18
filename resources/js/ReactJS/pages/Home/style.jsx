@@ -11,6 +11,8 @@ export const HomeMain = styled.main`
     height: 100%;
 `;
 
-export const HomeCards = styled.div``;
+export const HomeCards = styled.div`
+    position: relative;
+`;
 
 export const HomeList = styled.article``;

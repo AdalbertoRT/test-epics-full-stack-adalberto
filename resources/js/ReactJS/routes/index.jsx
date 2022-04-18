@@ -10,7 +10,11 @@ const AppRoutes = () => {
             <Routes>
                 <Route path="/dashboard" element={<Home />} />
                 <Route path="/appointments" element={<Home />} />
-                <Route path="/customers" element={<Home />} />
+                <Route path="/customers" element={<Home />}>
+                    <Route path="edit" element={<Edit />} />
+                    <Route path="add" element={<Add />} />
+                </Route>
+                <Route path="/members" element={<Home />} />
                 <Route path="/finances" element={<Home />} />
                 <Route path="/reports" element={<Home />} />
                 <Route path="/settings" element={<Home />} />

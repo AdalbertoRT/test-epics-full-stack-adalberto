@@ -1,48 +1,51 @@
-import React, { useEffect, useState } from "react";
-
+import React, { useContext, useEffect, useState } from "react";
+import ageCalc from "../../helpers/ageCalc";
+import Loader from "./loader";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPhone } from "@fortawesome/free-solid-svg-icons";
 import { faEllipsis } from "@fortawesome/free-solid-svg-icons";
-import { Row, Col, Th } from "./style";
-import ageCalc from "../../helpers/ageCalc";
 import Modal from "../Modal";
-import { Link } from "react-router-dom";
-import Preloader from "./preloader";
+import { Col, Row, Th } from "./style";
+import { UserContext } from "../../store/UserContext";
 
-const List = ({ data }) => {
-    const [modal, setModal] = useState(false);
-    const [customerData, setCustomerData] = useState(null);
-
-    const handleCustomer = (data) => {
-        setCustomerData(data);
-        setModal(true);
-    };
+const CustomersTable = () => {
+    const { customers, loading } = useContext(UserContext);
+    const [data, setData] = useState(null);
+    const [customer, setCustomer] = useState(null);
 
     useEffect(() => {
-        console.log(data.customers);
-    }, []);
+        setData(customers);
+        console.log(data);
+    }, [customers]);
+
+    if (loading || data.customers.length == 0)
+        return (
+            <div className="w-100 d-flex align-items-center justify-content-center">
+                <Loader className="m-3" />
+            </div>
+        );
 
     return (
         <>
-            {data.customers ? (
-                <table className="table table-hover">
-                    <thead>
-                        <Row className="p-0">
-                            <Th scope="col">
-                                <input type="checkbox" name="" id="" />
-                            </Th>
-                            <Th scope="col">Name</Th>
-                            <Th scope="col">Last Vsit</Th>
-                            <Th scope="col">Age</Th>
-                            <Th scope="col">Gender</Th>
-                            <Th scope="col">Membership</Th>
-                            <Th scope="col">LTV</Th>
-                            <Th scope="col">Visits</Th>
-                            <Th scope="col">Actions</Th>
-                        </Row>
-                    </thead>
-                    <tbody>
-                        {data.customers.map((el) => (
+            <table className="table table-hover">
+                <thead>
+                    <Row className="p-0">
+                        <Th scope="col">
+                            <input type="checkbox" name="" id="" />
+                        </Th>
+                        <Th scope="col">Name</Th>
+                        <Th scope="col">Last Vsit</Th>
+                        <Th scope="col">Age</Th>
+                        <Th scope="col">Gender</Th>
+                        <Th scope="col">Membership</Th>
+                        <Th scope="col">LTV</Th>
+                        <Th scope="col">Visits</Th>
+                        <Th scope="col">Actions</Th>
+                    </Row>
+                </thead>
+                <tbody>
+                    {data &&
+                        data.customers?.map((el) => (
                             <Row
                                 key={el.id}
                                 className="small align-items-center p-0"
@@ -53,7 +56,7 @@ const List = ({ data }) => {
                                 <Col>
                                     <div
                                         className="row gap-1 userSelect"
-                                        onClick={() => handleCustomer(el)}
+                                        onClick={() => setCustomer(el)}
                                         data-bs-toggle="modal"
                                         data-bs-target="#customerModal"
                                     >
@@ -89,11 +92,11 @@ const List = ({ data }) => {
                                 </Col>
                                 <Col>{Math.floor(Math.random() * 50 + 1)}</Col>
                                 <Col>
-                                    <div className="d-flex justify-content-evenly align-items-center p-0 h-100">
+                                    <div className="d-flex gap-2 justify-content-evenly align-items-center p-0 h-100">
                                         <a
                                             type="button"
                                             href={"tel:" + el.phone_number}
-                                            className="btn btn-light btn-sm rounded py-0 px-1 text-secondary"
+                                            className="call btn btn-light btn-sm rounded py-0 px-1 text-secondary shadow-sm"
                                         >
                                             <FontAwesomeIcon
                                                 icon={faPhone}
@@ -101,61 +104,37 @@ const List = ({ data }) => {
                                             />{" "}
                                             <small>Call</small>
                                         </a>
-                                        <button className="btn btn-light btn-sm rounded py-0 px-1 text-secondary">
+                                        <button
+                                            className="watch btn btn-light btn-sm rounded py-0 px-1 text-secondary shadow-sm"
+                                            onClick={() => setCustomer(el)}
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#customerModal"
+                                        >
                                             <span className="fw-bold">
                                                 &bull;&bull;
                                             </span>{" "}
                                             <small>Watch</small>
                                         </button>
                                         <button
-                                            id={"dropdownMenuButton" + el.id}
-                                            className="btn btn-light btn-sm rounded py-0 px-1 text-secondary dropdown-toggle"
-                                            bs-toggle="dropdown"
-                                            data-bs-display="static"
-                                            aria-expanded="false"
+                                            className="ellipsis btn btn-light btn-sm rounded py-0 px-1 text-secondary shadow-sm"
+                                            onClick={() => setCustomer(el)}
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#customerModal"
                                         >
                                             <FontAwesomeIcon
                                                 icon={faEllipsis}
                                                 width="10"
                                             />
                                         </button>
-                                        <ul
-                                            className="dropdown-menu dropdown-menu-end dropdown-menu-sm-start"
-                                            aria-labelledby={
-                                                "dropdownMenuButton" + el.id
-                                            }
-                                        >
-                                            <li>
-                                                <Link
-                                                    to="/edit"
-                                                    className="dropdown-item"
-                                                    type="button"
-                                                >
-                                                    Edit
-                                                </Link>
-                                            </li>
-                                            <li>
-                                                <button
-                                                    className="dropdown-item"
-                                                    type="button"
-                                                >
-                                                    Delete
-                                                </button>
-                                            </li>
-                                        </ul>
                                     </div>
                                 </Col>
                             </Row>
                         ))}
-                    </tbody>
-                </table>
-            ) : (
-                <Preloader />
-            )}
-
-            <Modal data={customerData} />
+                </tbody>
+            </table>
+            <Modal data={customer} />
         </>
     );
 };
 
-export default List;
+export default CustomersTable;
