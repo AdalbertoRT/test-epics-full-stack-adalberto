@@ -1,36 +1,37 @@
 import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../store/UserContext";
-import * as C from "./style";
+import * as C from "../styles";
+import { HomeCards, HomeList } from "./style";
 
 import Menu from "../../components/Menu";
 import Brand from "../../components/Brand";
 import List from "../../components/List";
 import HeaderList from "../../components/HeaderList";
 import Cards from "../../components/Cards";
+import UserLogged from "../../components/UserLogged";
+import Aside from "../../components/Aside";
 
 const Home = () => {
     const { fetchCustomers, customers } = useContext(UserContext);
 
     useEffect(() => {
-        fetchCustomers();
+        if (!customers) fetchCustomers();
+        console.log(customers);
     }, []);
 
     return (
-        <C.HomeContainer className="container d-flex m-auto p-2 bg-white rounded">
-            <C.HomeAside className="flex-fill">
-                <Brand />
-                <Menu />
-            </C.HomeAside>
-            <C.HomeMain className="flex-fill rounded p-2">
-                <C.HomeCards className="mb-2">
+        <C.Container className="container row m-auto p-2 bg-white rounded">
+            <Aside />
+            <C.Main className="col-10 rounded p-2">
+                <HomeCards className="mb-2">
                     <Cards />
-                </C.HomeCards>
-                <C.HomeList className="bg-white rounded p-2">
+                </HomeCards>
+                <HomeList className="bg-white h-100 rounded p-2">
                     <HeaderList />
-                    {customers && <List />}
-                </C.HomeList>
-            </C.HomeMain>
-        </C.HomeContainer>
+                    <List />
+                </HomeList>
+            </C.Main>
+        </C.Container>
     );
 };
 

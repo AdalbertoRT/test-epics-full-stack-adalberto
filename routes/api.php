@@ -19,14 +19,23 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-//DATA OF CUSTOMER BY ID
-Route::get('/customers/{id}', [UserController::class, 'showCustomerById'])->name('showById');
+Route::prefix('/customers')->group(function () {
+    //DATA OF CUSTOMER BY ID
+    Route::get('{id}', [UserController::class, 'showCustomerById'])->name('showById');
 
-//DATA OF CUSTOMER BY NAME
-Route::get('/customers/name/{name}', [UserController::class, 'showCustomerByName'])->name('showByName');
+    //DATA OF CUSTOMER BY NAME
+    Route::get('name/{name}', [UserController::class, 'showCustomerByName'])->name('showByName');
 
-//DATA OF CUSTOMER BY MEMBERSHIP
-Route::get('/members/{member}', [UserController::class, 'showCustomerByMembers'])->name('showByMembership');
+    //DATA OF CUSTOMER BY MEMBERSHIP
+    Route::get('members/{member}', [UserController::class, 'showCustomerByMembers'])->name('showByMembership');
+
+    //ADD CUSTOMER
+    Route::post('new', [UserController::class, 'store'])->name('store');
+
+    //DELETE CUSTOMER
+    Route::delete('delete/{id}', [UserController::class, 'destroy'])->name('delete');
+
+});
 
 //LIST OF CUSTOMERS (HOMEPAGE)
 Route::get('/', [UserController::class, 'index'])->name('home');

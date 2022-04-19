@@ -19,3 +19,9 @@ export const ModalPicture = styled.img`
 export const ModalBody = styled.div`
     font-size: 0.8rem;
 `;
+
+export const AlertComponent = styled.div`
+    position: absolute;
+
+    background-color: rgba(0, 0, 0, 0.7);
+`;

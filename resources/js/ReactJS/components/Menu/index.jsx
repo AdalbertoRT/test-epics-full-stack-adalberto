@@ -13,56 +13,44 @@ import UserLogged from "../UserLogged";
 
 const Menu = () => {
     return (
-        <Aside className="d-flex flex-column align-items-start">
-            <MenuComponent className="list-group mb-auto">
-                <MenuItem className="list-group-item my-1 border-0 bg-transparent row align-items-center">
-                    <NavLink to="/dashboard" className="row align-items-center">
-                        <FontAwesomeIcon icon={faGaugeHigh} className="col-1" />
-                        <span className="col-auto">Dashboard</span>
-                    </NavLink>
-                </MenuItem>
-                <MenuItem className="list-group-item my-1 border-0 bg-transparent row align-items-center">
-                    <NavLink
-                        to="/appointments"
-                        className="row align-items-center"
-                    >
-                        <FontAwesomeIcon
-                            icon={faCalendarCheck}
-                            className="col-1"
-                        />
-                        <span className="col-auto">Appointments</span>
-                    </NavLink>
-                </MenuItem>
-                <MenuItem className="list-group-item my-1 border-0 bg-transparent row align-items-center selected">
-                    <NavLink to="/customers" className="row align-items-center">
-                        <FontAwesomeIcon icon={faUsers} className="col-1" />
-                        <span className="col-auto">Customers</span>
-                    </NavLink>
-                </MenuItem>
-                <MenuItem className="list-group-item my-1 border-0 bg-transparent row align-items-center">
-                    <NavLink to="/finances" className="row align-items-center">
-                        <FontAwesomeIcon
-                            icon={faCreditCard}
-                            className="col-1"
-                        />
-                        <span className="col-auto">Finances</span>
-                    </NavLink>
-                </MenuItem>
-                <MenuItem className="list-group-item my-1 border-0 bg-transparent row align-items-center">
-                    <NavLink to="/reports" className="row align-items-center">
-                        <FontAwesomeIcon icon={faSignal} className="col-1" />
-                        <span className="col-auto">Reports</span>
-                    </NavLink>
-                </MenuItem>
-                <MenuItem className="list-group-item my-1 border-0 bg-transparent row align-items-center">
-                    <NavLink to="/settings" className="row align-items-center">
-                        <FontAwesomeIcon icon={faGear} className="col-1" />
-                        <span className="col-auto">Settings</span>
-                    </NavLink>
-                </MenuItem>
-            </MenuComponent>
-            <UserLogged />
-        </Aside>
+        <MenuComponent className="list-group">
+            <MenuItem className="list-group-item my-1 border-0 bg-transparent row align-items-center">
+                <NavLink to="/dashboard" className="row align-items-center">
+                    <FontAwesomeIcon icon={faGaugeHigh} className="col-1" />
+                    <span className="col-auto">Dashboard</span>
+                </NavLink>
+            </MenuItem>
+            <MenuItem className="list-group-item my-1 border-0 bg-transparent row align-items-center">
+                <NavLink to="/appointments" className="row align-items-center">
+                    <FontAwesomeIcon icon={faCalendarCheck} className="col-1" />
+                    <span className="col-auto">Appointments</span>
+                </NavLink>
+            </MenuItem>
+            <MenuItem className="list-group-item my-1 border-0 bg-transparent row align-items-center selected">
+                <NavLink to="/customers" className="row align-items-center">
+                    <FontAwesomeIcon icon={faUsers} className="col-1" />
+                    <span className="col-auto">Customers</span>
+                </NavLink>
+            </MenuItem>
+            <MenuItem className="list-group-item my-1 border-0 bg-transparent row align-items-center">
+                <NavLink to="/finances" className="row align-items-center">
+                    <FontAwesomeIcon icon={faCreditCard} className="col-1" />
+                    <span className="col-auto">Finances</span>
+                </NavLink>
+            </MenuItem>
+            <MenuItem className="list-group-item my-1 border-0 bg-transparent row align-items-center">
+                <NavLink to="/reports" className="row align-items-center">
+                    <FontAwesomeIcon icon={faSignal} className="col-1" />
+                    <span className="col-auto">Reports</span>
+                </NavLink>
+            </MenuItem>
+            <MenuItem className="list-group-item my-1 border-0 bg-transparent row align-items-center">
+                <NavLink to="/settings" className="row align-items-center">
+                    <FontAwesomeIcon icon={faGear} className="col-1" />
+                    <span className="col-auto">Settings</span>
+                </NavLink>
+            </MenuItem>
+        </MenuComponent>
     );
 };
 

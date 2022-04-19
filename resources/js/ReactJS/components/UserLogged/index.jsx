@@ -2,10 +2,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import img from "../../assets/img/default.jpg";
 import { faUserPen } from "@fortawesome/free-solid-svg-icons";
+import { LoggedComponent } from "./style";
 
 const UserLogged = () => {
     return (
-        <div>
+        <LoggedComponent>
             <div className="d-flex flex-column">
                 <div className="d-flex">
                     <img
@@ -27,7 +28,7 @@ const UserLogged = () => {
                     </button>
                 </div>
             </div>
-        </div>
+        </LoggedComponent>
     );
 };
 

@@ -1,10 +1,5 @@
 import styled from "styled-components";
 
-export const Aside = styled.div`
-    position: relative;
-    height: 100%;
-`;
-
 export const MenuComponent = styled.ul`
     position: relative;
     width: 100%;
@@ -19,6 +14,11 @@ export const MenuItem = styled.li`
     padding: 0;
     display: flex;
     align-items: center;
+
+    svg {
+        width: 15px;
+        height: 15px;
+    }
 
     a {
         text-decoration: none;

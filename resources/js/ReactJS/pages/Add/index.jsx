@@ -1,19 +1,47 @@
-import React, { useState } from "react";
-import Brand from "../../components/Brand";
-import Menu from "../../components/Menu";
+import React, { useState, useEffect } from "react";
+import Aside from "../../components/Aside";
+import * as C from "../styles";
 
 const Add = () => {
-    const [selectGender, setSelectGender] = useState("default");
-    const [selectMembership, setSelectMembership] = useState("no");
+    const [formData, setFormData] = useState({});
+    const [load, setLoad] = useState(false);
+
+    const addCustomer = async (e) => {
+        e.preventDefault();
+        setLoad(true);
+        const host = window.location.hostname;
+        const port = window.location.port;
+        const settings = {
+            method: "POST",
+            body: JSON.stringify(formData),
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+            },
+        };
+        try {
+            const response = await fetch(
+                `http://${host}:${port}/api/customers/new`,
+                settings
+            );
+            const json = await response.json();
+
+            setLoad(false);
+            console.log(json);
+        } catch (e) {
+            setLoad(false);
+            console.log(e);
+        }
+    };
+    useEffect(() => {
+        console.log(formData);
+    }, [formData]);
 
     return (
-        <div className="container m-auto p-2 bg-white rounded row">
-            <div className="col-3">
-                <Brand />
-                <Menu />
-            </div>
-            <div className="col-9 rounded p-2">
-                <div className="bg-white rounded p-2">
+        <C.Container className="container row m-auto p-2 bg-white rounded">
+            <Aside />
+            <C.Main className="col-10 rounded p-2">
+                <div className="bg-white rounded h-100 p-2">
                     <fieldset>
                         <legend>Add New Customer</legend>
                         <form>
@@ -26,6 +54,12 @@ const Add = () => {
                                     className="form-control"
                                     id="picture"
                                     name="picture"
+                                    onChange={(item) =>
+                                        setFormData({
+                                            ...formData,
+                                            picture: item.target.files[0],
+                                        })
+                                    }
                                 />
                             </div>
                             <div className="mb-3 row">
@@ -41,6 +75,14 @@ const Add = () => {
                                         className="form-control"
                                         id="name"
                                         name="name"
+                                        value={formData.name ?? ""}
+                                        onChange={(item) =>
+                                            setFormData({
+                                                ...formData,
+                                                name: item.target.value,
+                                            })
+                                        }
+                                        required
                                     />
                                 </div>
                                 <div className="col">
@@ -56,6 +98,14 @@ const Add = () => {
                                         id="email"
                                         name="email"
                                         aria-describedby="emailHelp"
+                                        value={formData.email ?? ""}
+                                        onChange={(item) =>
+                                            setFormData({
+                                                ...formData,
+                                                email: item.target.value,
+                                            })
+                                        }
+                                        required
                                     />
                                     <div id="emailHelp" className="form-text">
                                         We'll never share your email with anyone
@@ -75,6 +125,14 @@ const Add = () => {
                                         type="text"
                                         className="form-control"
                                         id="phone_number"
+                                        name="phone_number"
+                                        value={formData.phone_number ?? ""}
+                                        onChange={(item) =>
+                                            setFormData({
+                                                ...formData,
+                                                phone_number: item.target.value,
+                                            })
+                                        }
                                     />
                                 </div>
                                 <div className="col">
@@ -85,9 +143,17 @@ const Add = () => {
                                         Birthdate
                                     </label>
                                     <input
-                                        type="text"
+                                        type="date"
                                         className="form-control"
                                         id="birthdate"
+                                        name="birthdate"
+                                        value={formData.birthdate ?? ""}
+                                        onChange={(item) =>
+                                            setFormData({
+                                                ...formData,
+                                                birthdate: item.target.value,
+                                            })
+                                        }
                                     />
                                 </div>
                             </div>
@@ -105,17 +171,17 @@ const Add = () => {
                                         id="gender"
                                         name="gender"
                                         aria-label="Default select example"
-                                        value={selectGender}
-                                        onChange={(e) =>
-                                            setSelectGender(e.target.value)
+                                        value={formData.gender}
+                                        onChange={(item) =>
+                                            setFormData({
+                                                ...formData,
+                                                gender: item.target.value,
+                                            })
                                         }
                                     >
-                                        <option value="default">
-                                            Select Gender
-                                        </option>
+                                        <option value="others">Others</option>
                                         <option value="male">Male</option>
                                         <option value="female">Female</option>
-                                        <option value="others">Others</option>
                                     </select>
                                 </div>
                                 <div className="col">
@@ -130,10 +196,14 @@ const Add = () => {
                                         id="membership"
                                         name="membership"
                                         aria-label="Default select example"
-                                        value={selectMembership}
-                                        onChange={(e) =>
-                                            setSelectMembership(e.target.value)
+                                        value={formData.membership}
+                                        onChange={(item) =>
+                                            setFormData({
+                                                ...formData,
+                                                membership: item.target.value,
+                                            })
                                         }
+                                        required
                                     >
                                         <option value="no">No</option>
                                         <option value="yes">Yes</option>
@@ -147,9 +217,19 @@ const Add = () => {
                                         ltv
                                     </label>
                                     <input
-                                        type="text"
+                                        type="number"
                                         className="form-control"
                                         id="ltv"
+                                        name="ltv"
+                                        value={formData.ltv ?? 0.0}
+                                        onChange={(item) =>
+                                            setFormData({
+                                                ...formData,
+                                                ltv: parseFloat(
+                                                    item.target.value
+                                                ),
+                                            })
+                                        }
                                     />
                                 </div>
                                 <div className="col">
@@ -163,6 +243,14 @@ const Add = () => {
                                         type="text"
                                         className="form-control"
                                         id="last_visit"
+                                        name="last_visit"
+                                        value={formData.last_visit ?? ""}
+                                        onChange={(item) =>
+                                            setFormData({
+                                                ...formData,
+                                                last_visit: item.target.value,
+                                            })
+                                        }
                                     />
                                 </div>
                             </div>
@@ -178,8 +266,8 @@ const Add = () => {
                         </form>
                     </fieldset>
                 </div>
-            </div>
-        </div>
+            </C.Main>
+        </C.Container>
     );
 };
 

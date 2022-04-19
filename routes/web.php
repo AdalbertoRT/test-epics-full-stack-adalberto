@@ -26,13 +26,16 @@ Route::prefix('/')->group(function () {
     Route::get('appointments', function () {
         return view('welcome');
     });
-    Route::prefix('customers')->group(function () {
+    Route::prefix('customers/')->group(function () {
         Route::get('edit', function () {
             return view('welcome');
         });
         Route::get('add', function () {
             return view('welcome');
         });
+        Route::get('', function () {
+            return view('welcome');
+        })->name('customers');
     });
     Route::get('finances', function () {
         return view('welcome');

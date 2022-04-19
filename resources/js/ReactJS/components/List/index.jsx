@@ -12,16 +12,24 @@ const CustomersTable = () => {
     const { customers, loading } = useContext(UserContext);
     const [data, setData] = useState(null);
     const [customer, setCustomer] = useState(null);
+    const host = window.location.origin;
 
     useEffect(() => {
         setData(customers);
-        console.log(data);
+        console.log(window.location.hostname);
     }, [customers]);
 
-    if (loading || data?.customers.length == 0)
+    if (loading)
         return (
             <div className="w-100 d-flex align-items-center justify-content-center">
-                <Loader className="m-3" />
+                <Loader className="m-3 h" />
+            </div>
+        );
+
+    if (data?.customers.length < 1)
+        return (
+            <div className="w-100 d-flex align-items-center justify-content-center">
+                <p className="m-3">No customers to show.</p>
             </div>
         );
 
@@ -31,7 +39,7 @@ const CustomersTable = () => {
                 <thead>
                     <Row className="p-0">
                         <Th scope="col">
-                            <input type="checkbox" name="" id="" />
+                            <input type="checkbox" name="" id="" readOnly />
                         </Th>
                         <Th scope="col">Name</Th>
                         <Th scope="col">Last Vsit</Th>
@@ -51,7 +59,12 @@ const CustomersTable = () => {
                                 className="small align-items-center p-0"
                             >
                                 <Col>
-                                    <input type="checkbox" name="" id="" />
+                                    <input
+                                        type="checkbox"
+                                        name=""
+                                        id=""
+                                        readOnly
+                                    />
                                 </Col>
                                 <Col>
                                     <div
@@ -61,7 +74,14 @@ const CustomersTable = () => {
                                         data-bs-target="#customerModal"
                                     >
                                         <img
-                                            src={el.picture}
+                                            src={
+                                                el.picture !== "default.jpg"
+                                                    ? host +
+                                                      "/images/customers/" +
+                                                      el.picture
+                                                    : host +
+                                                      "/images/default.jpg"
+                                            }
                                             className="rounded-circle p-0 m-0 col-1"
                                             width="25"
                                         />

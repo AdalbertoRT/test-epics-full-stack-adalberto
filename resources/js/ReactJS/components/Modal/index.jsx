@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
+import Alert from "./alert";
 import {
     ModalBackground,
     ModalHeader,
@@ -11,10 +12,20 @@ import {
 const Modal = ({ data }) => {
     const [customerData, setCustomerData] = useState(null);
     const [button, setButton] = useState("Overview");
+    const [alert, setAlert] = useState(false);
+    const [load, setLoad] = useState(false);
+    const host = window.location.origin;
+    const order = Math.floor(Math.random() * 100 + 1).toLocaleString("en-US", {
+        style: "currency",
+        currency: "USD",
+    });
+    const classes = Math.floor(Math.random() * 50 + 1);
 
     useEffect(() => {
         setCustomerData(data);
     }, [data]);
+
+    if (load) return null;
 
     return (
         <ModalBackground
@@ -97,7 +108,13 @@ const Modal = ({ data }) => {
                         <ModalBody className="modal-body gap-2 row">
                             <div className="picture col-3">
                                 <ModalPicture
-                                    src={customerData.picture}
+                                    src={
+                                        customerData.picture !== "default.jpg"
+                                            ? host +
+                                              "/images/customers/" +
+                                              customerData.picture
+                                            : host + "/images/default.jpg"
+                                    }
                                     className="rounded"
                                 />
                             </div>
@@ -128,7 +145,12 @@ const Modal = ({ data }) => {
                                         >
                                             Edit
                                         </Link>
-                                        <button className="btn btn-sm bg-danger p-0 px-1">
+                                        <button
+                                            className="btn btn-sm bg-danger p-0 px-1"
+                                            onClick={() => {
+                                                setAlert(true);
+                                            }}
+                                        >
                                             Delete
                                         </button>
                                     </div>
@@ -166,11 +188,7 @@ const Modal = ({ data }) => {
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td>
-                                                    {Math.floor(
-                                                        Math.random() * 50 + 1
-                                                    )}
-                                                </td>
+                                                <td>{classes}</td>
                                                 <td>
                                                     {customerData.ltv.toLocaleString(
                                                         "en-US",
@@ -180,14 +198,7 @@ const Modal = ({ data }) => {
                                                         }
                                                     )}
                                                 </td>
-                                                <td>
-                                                    {Math.floor(
-                                                        Math.random() * 100 + 1
-                                                    ).toLocaleString("en-US", {
-                                                        style: "currency",
-                                                        currency: "USD",
-                                                    })}
-                                                </td>
+                                                <td>{order}</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -278,6 +289,13 @@ const Modal = ({ data }) => {
                     )}
                 </div>
             </div>
+            {alert && (
+                <Alert
+                    setAlert={setAlert}
+                    customerId={customerData.id}
+                    setLoad={setLoad}
+                />
+            )}
         </ModalBackground>
     );
 };
