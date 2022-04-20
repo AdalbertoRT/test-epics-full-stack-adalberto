@@ -1,50 +1,89 @@
 import React, { useState, useEffect } from "react";
 import Aside from "../../components/Aside";
 import * as C from "../styles";
+import formatDate from "../../helpers/formatDate";
 
 const Add = () => {
-    const [formData, setFormData] = useState({});
+    const defaultData = {
+        name: null,
+        email: null,
+        picture: "default.jpg",
+        phone_number: null,
+        birthdate: null,
+        gender: "others",
+        membership: "no",
+        ltv: 0.0,
+        last_visit: null,
+    };
+    const [formData, setFormData] = useState(defaultData);
+    const [alertMsg, setAlertMsg] = useState(null);
     const [load, setLoad] = useState(false);
+    const host = window.location.origin;
+    const port = window.location.port || "80";
 
     const addCustomer = async (e) => {
         e.preventDefault();
         setLoad(true);
-        const host = window.location.hostname;
-        const port = window.location.port;
+
+        //FORMAT BIRTHDATE
+        if (formData.birthdate !== null) {
+            const birthdate = formatDate(formData.birthdate, "yyyy-mm-dd");
+            setFormData({ ...formData, birthdate: birthdate });
+        }
+        //FORMAT LAST_VISIT
+        if (formData.last_visit !== null) {
+            const today = new Date();
+            setFormData({
+                ...formData,
+                last_visit: formatDate(today, "yyyy-mm-dd"),
+            });
+        }
         const settings = {
             method: "POST",
-            body: JSON.stringify(formData),
             headers: {
                 Accept: "application/json",
                 "Content-Type": "application/json",
             },
+            body: JSON.stringify(formData),
         };
         try {
             const response = await fetch(
-                `http://${host}:${port}/api/customers/new`,
+                `${host}:${port}/api/customers/new`,
                 settings
             );
             const json = await response.json();
-
-            setLoad(false);
+            setAlertMsg({ success: json.msg });
             console.log(json);
-        } catch (e) {
             setLoad(false);
-            console.log(e);
+        } catch (e) {
+            setAlertMsg({ error: "Failed to add new customer!" });
+            console.log(e.message);
+            setLoad(false);
         }
     };
+
     useEffect(() => {
         console.log(formData);
     }, [formData]);
 
     return (
         <C.Container className="container row m-auto p-2 bg-white rounded">
+            {alertMsg && (
+                <div
+                    className={`alert ${
+                        alertMsg.success ? "alert-success" : "alert-danger"
+                    }`}
+                    role="alert"
+                >
+                    {alertMsg.success ? alertMsg.success : alertMsg.error}
+                </div>
+            )}
             <Aside />
             <C.Main className="col-10 rounded p-2">
                 <div className="bg-white rounded h-100 p-2">
                     <fieldset>
                         <legend>Add New Customer</legend>
-                        <form>
+                        <form onSubmit={addCustomer}>
                             <div className="mb-3">
                                 <label htmlFor="picture" className="form-label">
                                     Picture
@@ -221,7 +260,7 @@ const Add = () => {
                                         className="form-control"
                                         id="ltv"
                                         name="ltv"
-                                        value={formData.ltv ?? 0.0}
+                                        value={formData.ltv ?? "0.00"}
                                         onChange={(item) =>
                                             setFormData({
                                                 ...formData,
@@ -240,7 +279,7 @@ const Add = () => {
                                         Last Visit
                                     </label>
                                     <input
-                                        type="text"
+                                        type="date"
                                         className="form-control"
                                         id="last_visit"
                                         name="last_visit"
@@ -259,8 +298,9 @@ const Add = () => {
                                 <button
                                     type="submit"
                                     className="btn btn-primary"
+                                    disabled={load ? "disabled" : ""}
                                 >
-                                    ADD CUSTOMER
+                                    {!load ? "ADD CUSTOMER" : "WAIT..."}
                                 </button>
                             </div>
                         </form>

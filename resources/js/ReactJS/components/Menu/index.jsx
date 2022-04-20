@@ -1,5 +1,5 @@
 import React from "react";
-import { Aside, MenuComponent, MenuItem } from "./style";
+import { MenuComponent, MenuItem } from "./style";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGaugeHigh } from "@fortawesome/free-solid-svg-icons";
 import { faCalendarCheck } from "@fortawesome/free-regular-svg-icons";

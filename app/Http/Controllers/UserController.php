@@ -49,8 +49,8 @@ class UserController extends Controller
             "birthdate" => "date",
             "gender" => "string|max:6",
             "membership" => "string|max:3",
-            "ltv" => "numeric|required|min:0",
-            "last_visit" => "date|required|min:0",
+            "ltv" => "numeric|required",
+            "last_visit" => "date|required",
         ];
 
         $validator = Validator::make($request->all(), $rules);
@@ -81,28 +81,28 @@ class UserController extends Controller
         $customer->membership = $membership;
         $customer->ltv = $ltv;
         $customer->last_visit = $last_visit;
-    
+
         //UPLOAD DE IMAGENS
         if ($request->hasfile("picture") && $request->file('picture')->isValid()) {
-                    $picture = $request->file('picture');
-                    $imgName = $picture->hashName();
-                    $imgResize = Image::make($picture)->resize(300, 300);
+            $picture = $request->file('picture');
+            $imgName = $picture->hashName();
+            $imgResize = Image::make($picture)->resize(300, 300);
 
-                    // Storage::disk("public")->put(
-                    //     "images/small/" . $imgName,
-                    //     $imgSmall->encode()
-                    // );
-                   
-                    $imgResize->save(public_path("images/customers/".$imgName), 80);
-                    $customer->picture = $imgName;      
+            // Storage::disk("public")->put(
+            //     "images/small/" . $imgName,
+            //     $imgSmall->encode()
+            // );
+
+            $imgResize->save(public_path("images/customers/" . $imgName), 80);
+            $customer->picture = $imgName;
         }
 
-        try{ 
+        try {
             $customer->save();
-        }catch(Exception $e){
-             $array['msg'] = "Add new customer is failed! Error: ".$e;
+        } catch (Exception $e) {
+            $array['msg'] = "Add new customer is failed! Error: " . $e;
         }
-       
+
         return $array['msg'] = 'Customer added successfully!';
     }
 
@@ -266,15 +266,14 @@ class UserController extends Controller
     public function destroy($id)
     {
         $customer = User::find($id);
-        
-        if($customer){
+
+        if ($customer) {
             $oldFile = public_path("images/customers/$customer->picture");
-            if($oldFile) Storage::delete(public_path("public/customers/{$customer->category}/$customer->img"));
+            if ($oldFile) Storage::delete(public_path("public/customers/{$customer->category}/$customer->img"));
             $array = ['msg' => `$customer->name client successfully deleted!`];
             $customer->delete();
-        } 
-        else $array = ['msg' => 'Customer does not exist!'];
- 
+        } else $array = ['msg' => 'Customer does not exist!'];
+
         return $array;
     }
 

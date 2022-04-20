@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import Loader from "../List/loader";
 import Alert from "./alert";
 import {
     ModalBackground,
@@ -25,7 +26,12 @@ const Modal = ({ data }) => {
         setCustomerData(data);
     }, [data]);
 
-    if (load) return null;
+    if (load)
+        return (
+            <div className="d-flex h-100 w-100 align-items-center justify-content-center">
+                <Loader />
+            </div>
+        );
 
     return (
         <ModalBackground
