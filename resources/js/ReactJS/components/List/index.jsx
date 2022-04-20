@@ -16,7 +16,6 @@ const CustomersTable = () => {
 
     useEffect(() => {
         setData(customers);
-        console.log(window.location.hostname);
     }, [customers]);
 
     if (loading)
@@ -90,7 +89,7 @@ const CustomersTable = () => {
                                         </span>
                                     </div>
                                 </Col>
-                                <Col>{el.last_visit.split(" ")[0]}</Col>
+                                <Col>{el.last_visit?.split(" ")[0]}</Col>
                                 <Col>{ageCalc(el.birthdate)}</Col>
                                 <Col>{el.gender}</Col>
                                 <Col>

@@ -5,15 +5,15 @@ import formatDate from "../../helpers/formatDate";
 
 const Add = () => {
     const defaultData = {
-        name: null,
-        email: null,
-        picture: "default.jpg",
-        phone_number: null,
-        birthdate: null,
+        name: "",
+        email: "",
+        picture: "",
+        phone_number: "",
+        birthdate: "",
         gender: "others",
         membership: "no",
         ltv: 0.0,
-        last_visit: null,
+        last_visit: "",
     };
     const [formData, setFormData] = useState(defaultData);
     const [alertMsg, setAlertMsg] = useState(null);
@@ -21,21 +21,34 @@ const Add = () => {
     const host = window.location.origin;
     const port = window.location.port || "80";
 
-    const addCustomer = async (e) => {
+    const addCustomer = async (e, formData) => {
         e.preventDefault();
         setLoad(true);
 
+        // //FORMAT PICTURE
+        if (formData.picture) {
+            const picture = formData.picture;
+            picture.toJSON = () => ({
+                lastModified: picture.lastModified,
+                lastModifiedDate: picture.lastModifiedDate,
+                name: picture.name,
+                size: picture.size,
+                type: picture.type,
+                webkitRelativePath: picture.webkitRelativePath,
+            });
+            setFormData({ ...formData, picture: JSON.stringify(picture) });
+        }
+
         //FORMAT BIRTHDATE
-        if (formData.birthdate !== null) {
+        if (formData.birthdate) {
             const birthdate = formatDate(formData.birthdate, "yyyy-mm-dd");
             setFormData({ ...formData, birthdate: birthdate });
         }
         //FORMAT LAST_VISIT
-        if (formData.last_visit !== null) {
-            const today = new Date();
+        if (formData.last_visit) {
             setFormData({
                 ...formData,
-                last_visit: formatDate(today, "yyyy-mm-dd"),
+                last_visit: formatDate(formData.last_visit, "yyyy-mm-dd"),
             });
         }
         const settings = {
@@ -46,24 +59,20 @@ const Add = () => {
             },
             body: JSON.stringify(formData),
         };
-        try {
-            const response = await fetch(
-                `${host}:${port}/api/customers/new`,
-                settings
-            );
-            const json = await response.json();
-            setAlertMsg({ success: json.msg });
-            console.log(json);
-            setLoad(false);
-        } catch (e) {
-            setAlertMsg({ error: "Failed to add new customer!" });
-            console.log(e.message);
-            setLoad(false);
-        }
+
+        const response = await fetch(
+            `${host}:${port}/api/customers/new`,
+            settings
+        );
+
+        const json = await response.json();
+        // setAlertMsg(json);
+        console.log(json);
+        setLoad(false);
     };
 
     useEffect(() => {
-        console.log(formData);
+        console.log(JSON.stringify(formData));
     }, [formData]);
 
     return (
@@ -71,7 +80,7 @@ const Add = () => {
             {alertMsg && (
                 <div
                     className={`alert ${
-                        alertMsg.success ? "alert-success" : "alert-danger"
+                        alertMsg ? "alert-success" : "alert-danger"
                     }`}
                     role="alert"
                 >
@@ -83,7 +92,9 @@ const Add = () => {
                 <div className="bg-white rounded h-100 p-2">
                     <fieldset>
                         <legend>Add New Customer</legend>
-                        <form onSubmit={addCustomer}>
+                        <form
+                            onSubmit={(e, formData) => addCustomer(e, formData)}
+                        >
                             <div className="mb-3">
                                 <label htmlFor="picture" className="form-label">
                                     Picture
@@ -114,7 +125,7 @@ const Add = () => {
                                         className="form-control"
                                         id="name"
                                         name="name"
-                                        value={formData.name ?? ""}
+                                        value={formData.name}
                                         onChange={(item) =>
                                             setFormData({
                                                 ...formData,
@@ -137,7 +148,7 @@ const Add = () => {
                                         id="email"
                                         name="email"
                                         aria-describedby="emailHelp"
-                                        value={formData.email ?? ""}
+                                        value={formData.email}
                                         onChange={(item) =>
                                             setFormData({
                                                 ...formData,
@@ -165,7 +176,7 @@ const Add = () => {
                                         className="form-control"
                                         id="phone_number"
                                         name="phone_number"
-                                        value={formData.phone_number ?? ""}
+                                        value={formData.phone_number}
                                         onChange={(item) =>
                                             setFormData({
                                                 ...formData,
@@ -186,7 +197,7 @@ const Add = () => {
                                         className="form-control"
                                         id="birthdate"
                                         name="birthdate"
-                                        value={formData.birthdate ?? ""}
+                                        value={formData.birthdate}
                                         onChange={(item) =>
                                             setFormData({
                                                 ...formData,
@@ -260,7 +271,7 @@ const Add = () => {
                                         className="form-control"
                                         id="ltv"
                                         name="ltv"
-                                        value={formData.ltv ?? "0.00"}
+                                        value={formData.ltv}
                                         onChange={(item) =>
                                             setFormData({
                                                 ...formData,
@@ -283,7 +294,7 @@ const Add = () => {
                                         className="form-control"
                                         id="last_visit"
                                         name="last_visit"
-                                        value={formData.last_visit ?? ""}
+                                        value={formData.last_visit}
                                         onChange={(item) =>
                                             setFormData({
                                                 ...formData,

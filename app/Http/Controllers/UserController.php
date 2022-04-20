@@ -38,72 +38,71 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $array = ["msg" => ""];
+        $array = ["error" => ""];
 
         //VALIDANDO
         $rules = [
             "name" => "string|required|max:50",
             "email" => "string|required|unique:users,email|max:100",
-            'picture' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             "phone_number" => "string|max:11",
-            "birthdate" => "date",
             "gender" => "string|max:6",
             "membership" => "string|max:3",
             "ltv" => "numeric|required",
-            "last_visit" => "date|required",
+            
         ];
 
         $validator = Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
-            return $array['msg'] = $validator->errors()->first();
-            // return redirect()
-            //     ->route("store")
-            //     ->with("error", $validator->errors()->first());
+            return $array['error'] = $validator->errors()->first();
         }
 
-        $name = $request->input("name");
-        $email = $request->input("email");
-        $phone_number = $request->input("phone_number");
-        $birthdate = $request->input("birthdate");
-        $gender = $request->input("gender");
-        $membership = $request->input("membership");
-        $ltv = $request->input("ltv");
-        $last_visit = $request->input("last_visit");
+        $data = $request->all();
+        // $name = $request->input("name");
+        // $email = $request->input("email");
+        // $phone_number = $request->input("phone_number");
+        // $birthdate = $request->input("birthdate");
+        // $gender = $request->input("gender");
+        // $membership = $request->input("membership");
+        // $ltv = $request->input("ltv");
+        // $last_visit = $request->input("last_visit");
 
         //CRIANDO O REGISTRO
         $customer = new User();
-        $customer->name = $name;
-        $customer->email = $email;
-        $customer->phone_number = $phone_number;
-        $customer->birthdate = $birthdate;
-        $customer->gender = $gender;
-        $customer->membership = $membership;
-        $customer->ltv = $ltv;
-        $customer->last_visit = $last_visit;
+        $customer->name = $data['name'];
+        $customer->email = $data['email'];
+        $customer->phone_number = $data['phone_number'];
+        $customer->birthdate = $data['birthdate'];
+        $customer->gender = $data['gender'];
+        $customer->membership = $data['membership'];
+        $customer->ltv = $data['ltv'];
+        $customer->last_visit = $data['last_visit'];
 
         //UPLOAD DE IMAGENS
-        if ($request->hasfile("picture") && $request->file('picture')->isValid()) {
-            $picture = $request->file('picture');
-            $imgName = $picture->hashName();
-            $imgResize = Image::make($picture)->resize(300, 300);
+        // if ($request->hasfile("picture") && $request->file('picture')->isValid()) {
+        //     $picture = $request->file('picture');
+        //     $imgName = $picture->hashName();
+        //     $imgResize = Image::make($picture)->resize(300, 300);
 
-            // Storage::disk("public")->put(
-            //     "images/small/" . $imgName,
-            //     $imgSmall->encode()
-            // );
+        //     // Storage::disk("public")->put(
+        //     //     "images/small/" . $imgName,
+        //     //     $imgSmall->encode()
+        //     // );
 
-            $imgResize->save(public_path("images/customers/" . $imgName), 80);
-            $customer->picture = $imgName;
-        }
+        //     // $imgResize->save(public_path("images/customers/" . $imgName), 80);
+        //     $customer->picture = $imgName;
+        // }else{
+        //     $customer->picture = 'default.jpg';
+        // }
 
         try {
             $customer->save();
+            $array['msg'] = 'Customer added successfully!';
         } catch (Exception $e) {
-            $array['msg'] = "Add new customer is failed! Error: " . $e;
+            $array['error'] = "Add new customer is failed! Error: " . $e;
         }
 
-        return $array['msg'] = 'Customer added successfully!';
+        return $array;
     }
 
     /**

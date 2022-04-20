@@ -22,6 +22,5 @@ export const ModalBody = styled.div`
 
 export const AlertComponent = styled.div`
     position: absolute;
-
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(0, 0, 0, 0.5);
 `;
