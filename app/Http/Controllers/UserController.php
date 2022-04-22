@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+use File;
 use Illuminate\Support\Facades\Validator;
 
 use Image;
@@ -20,14 +19,14 @@ class UserController extends Controller
     public function index()
 
     {
-        $array = ['error' => ''];
+        $array = ['msg' => ''];
 
-        $customers = User::simplePaginate(13);
+        $customers = User::orderBy('updated_at', 'DESC')->get();
 
-        $array['customers'] = $customers->items();
+        $array['customers'] = $customers;
         $array['countCustomers'] = $this->countCustomers();
 
-        return $array;
+        return response()->json($array);
     }
 
     /**
@@ -38,69 +37,69 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $array = ["error" => ""];
+        $array = ["msg" => ""];
 
         //VALIDANDO
         $rules = [
             "name" => "string|required|max:50",
             "email" => "string|required|unique:users,email|max:100",
-            "phone_number" => "string|max:11",
+            "phone_number" => "max:11",
             "gender" => "string|max:6",
             "membership" => "string|max:3",
             "ltv" => "numeric|required",
-            
+
         ];
 
         $validator = Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
-            return $array['error'] = $validator->errors()->first();
+            $array['error'] = $validator->errors()->first();
+            return response()->json($array);
         }
 
-        $data = $request->all();
-        // $name = $request->input("name");
-        // $email = $request->input("email");
-        // $phone_number = $request->input("phone_number");
-        // $birthdate = $request->input("birthdate");
-        // $gender = $request->input("gender");
-        // $membership = $request->input("membership");
-        // $ltv = $request->input("ltv");
-        // $last_visit = $request->input("last_visit");
+        //$data = $request->all();
+        $name = $request->input("name");
+        $email = $request->input("email");
+        $phone_number = $request->input("phone_number");
+        $birthdate = $request->input("birthdate");
+        $gender = $request->input("gender");
+        $membership = $request->input("membership");
+        $ltv = $request->input("ltv");
+        $last_visit = $request->input("last_visit");
 
         //CRIANDO O REGISTRO
         $customer = new User();
-        $customer->name = $data['name'];
-        $customer->email = $data['email'];
-        $customer->phone_number = $data['phone_number'];
-        $customer->birthdate = $data['birthdate'];
-        $customer->gender = $data['gender'];
-        $customer->membership = $data['membership'];
-        $customer->ltv = $data['ltv'];
-        $customer->last_visit = $data['last_visit'];
+        $customer->name = $name;
+        $customer->email = $email;
+        //$customer->picture = $picture;
+        $customer->phone_number = $phone_number;
+        $customer->birthdate = $birthdate;
+        $customer->gender = $gender;
+        $customer->membership = $membership;
+        $customer->ltv = $ltv;
+        $customer->last_visit = $last_visit;
+
 
         //UPLOAD DE IMAGENS
-        // if ($request->hasfile("picture") && $request->file('picture')->isValid()) {
-        //     $picture = $request->file('picture');
-        //     $imgName = $picture->hashName();
-        //     $imgResize = Image::make($picture)->resize(300, 300);
+        if ($request->hasFile('picture') && $request->file('picture')->isValid()) {
+            $picture = $request->file('picture');
+            $imgName = $picture->hashName();
+            $imgResize = Image::make($picture)->resize(300, 300);
 
-        //     // Storage::disk("public")->put(
-        //     //     "images/small/" . $imgName,
-        //     //     $imgSmall->encode()
-        //     // );
+            // Storage::disk("public")->put(
+            //     "images/small/" . $imgName,
+            //     $imgSmall->encode()
+            // );
 
-        //     // $imgResize->save(public_path("images/customers/" . $imgName), 80);
-        //     $customer->picture = $imgName;
-        // }else{
-        //     $customer->picture = 'default.jpg';
-        // }
-
-        try {
-            $customer->save();
-            $array['msg'] = 'Customer added successfully!';
-        } catch (Exception $e) {
-            $array['error'] = "Add new customer is failed! Error: " . $e;
+            $imgResize->save(public_path("images/customers/" . $imgName), 80);
+            $customer->picture = $imgName;
+        } else {
+            $customer->picture = 'default.jpg';
         }
+
+        $customer->save();
+        $last_record = User::latest()->first();
+        $array['msg'] = 'Customer added successfully!';
 
         return $array;
     }
@@ -264,16 +263,20 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
+        $array = ['msg' => ''];
+
         $customer = User::find($id);
 
         if ($customer) {
-            $oldFile = public_path("images/customers/$customer->picture");
-            if ($oldFile) Storage::delete(public_path("public/customers/{$customer->category}/$customer->img"));
-            $array = ['msg' => `$customer->name client successfully deleted!`];
+            $picture = public_path("images/customers/$customer->picture");
+            if ($picture) unlink(public_path("images/customers/$customer->img"));
+            $array['msg'] = `$customer->name client successfully deleted!`;
             $customer->delete();
-        } else $array = ['msg' => 'Customer does not exist!'];
+        } else {
+            $array['error'] = `Customer $id does not exist!`;
+        }
 
-        return $array;
+        return response()->json($array);
     }
 
     public function countCustomers()

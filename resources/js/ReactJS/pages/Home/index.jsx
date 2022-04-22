@@ -15,8 +15,7 @@ const Home = () => {
     const { fetchCustomers, customers } = useContext(UserContext);
 
     useEffect(() => {
-        if (!customers) fetchCustomers();
-        console.log(customers);
+        fetchCustomers();
     }, []);
 
     return (

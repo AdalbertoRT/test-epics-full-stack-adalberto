@@ -29,7 +29,6 @@ class User extends Authenticatable
         'last_visit'
     ];
 
-    public $timestamps = false;
 
     /**
      * The attributes that should be hidden for serialization.

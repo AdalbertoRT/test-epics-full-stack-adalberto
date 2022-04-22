@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import Alert from "./alert";
+import Alert from "../Alert";
 import {
     ModalBackground,
     ModalHeader,
@@ -10,7 +10,6 @@ import {
 } from "./style";
 
 const Modal = ({ data }) => {
-    const [customerData, setCustomerData] = useState(null);
     const [button, setButton] = useState("Overview");
     const [alert, setAlert] = useState(false);
     const host = window.location.origin;
@@ -19,38 +18,7 @@ const Modal = ({ data }) => {
         currency: "USD",
     });
     const classes = Math.floor(Math.random() * 50 + 1);
-
-    const deleteCustomer = async (e) => {
-        e.target.disabled = true;
-        e.target.innerText = "Excluding...";
-        const host = window.location.origin;
-        const port = window.location.port;
-        const settings = {
-            method: "DELETE",
-            headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json",
-            },
-        };
-        try {
-            const response = await fetch(
-                `${host}:${port}/api/customers/delete/` + customerId,
-                settings
-            );
-            const json = await response.json();
-
-            setAlert(false);
-            setLoad(true);
-            window.location.href = host;
-        } catch (e) {
-            setAlert(false);
-            window.location.href = host;
-        }
-    };
-
-    useEffect(() => {
-        setCustomerData(data);
-    }, [data]);
+    const modalRef = useRef();
 
     return (
         <>
@@ -59,6 +27,7 @@ const Modal = ({ data }) => {
                 id="customerModal"
                 tabIndex="-1"
                 aria-hidden="true"
+                ref={modalRef}
             >
                 <div className="modal-dialog modal-dialog-centered rounded modalEffect">
                     <div className="modal-content h-100">
@@ -137,16 +106,15 @@ const Modal = ({ data }) => {
                                 Membership
                             </ModalHeaderButton>
                         </ModalHeader>
-                        {customerData && (
+                        {data && (
                             <ModalBody className="modal-body gap-2 row">
                                 <div className="picture col-3">
                                     <ModalPicture
                                         src={
-                                            customerData.picture !==
-                                            "default.jpg"
+                                            data.picture !== "default.jpg"
                                                 ? host +
                                                   "/images/customers/" +
-                                                  customerData.picture
+                                                  data.picture
                                                 : host + "/images/default.jpg"
                                         }
                                         className="rounded"
@@ -155,12 +123,12 @@ const Modal = ({ data }) => {
                                 <div className="info col">
                                     <div>
                                         <strong className="d-flex flex-wrap">
-                                            {customerData.name}
+                                            {data.name}
                                         </strong>
                                         <small>
                                             Membership:{" "}
                                             <span className="badge bg-warning text-light align-items-center">
-                                                {customerData.membership.toUpperCase()}
+                                                {data.membership.toUpperCase()}
                                             </span>
                                         </small>
                                         <div className="d-flex gap-2 m-1">
@@ -222,7 +190,7 @@ const Modal = ({ data }) => {
                                                 <tr>
                                                     <td>{classes}</td>
                                                     <td>
-                                                        {customerData.ltv.toLocaleString(
+                                                        {data.ltv.toLocaleString(
                                                             "en-US",
                                                             {
                                                                 style: "currency",
@@ -325,7 +293,15 @@ const Modal = ({ data }) => {
                 </div>
             </ModalBackground>
 
-            {alert && <Alert setAlert={setAlert} />}
+            {alert && (
+                <Alert
+                    setAlert={setAlert}
+                    customerId={data.id}
+                    type={"warning"}
+                    msg={"Delete this client?"}
+                    modal={modalRef}
+                />
+            )}
         </>
     );
 };

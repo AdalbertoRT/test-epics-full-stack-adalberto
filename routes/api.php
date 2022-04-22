@@ -34,7 +34,6 @@ Route::prefix('/customers')->group(function () {
 
     //DELETE CUSTOMER
     Route::delete('delete/{id}', [UserController::class, 'destroy'])->name('delete');
-
 });
 
 //LIST OF CUSTOMERS (HOMEPAGE)

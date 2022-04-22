@@ -25,6 +25,7 @@ return new class extends Migration
             $table->enum('membership', ['yes', 'no'])->default('no');
             $table->float('ltv', 8, 2)->nullable()->default(0.00);
             $table->dateTime('last_visit')->nullable();
+            $table->timestamps();
         });
     }
 

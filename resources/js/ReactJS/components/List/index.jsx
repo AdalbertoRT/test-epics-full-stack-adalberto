@@ -90,7 +90,9 @@ const CustomersTable = () => {
                                     </div>
                                 </Col>
                                 <Col>{el.last_visit?.split(" ")[0]}</Col>
-                                <Col>{ageCalc(el.birthdate)}</Col>
+                                <Col>
+                                    {el.birthdate && ageCalc(el.birthdate)}
+                                </Col>
                                 <Col>{el.gender}</Col>
                                 <Col>
                                     {el.membership == "no" ? (
