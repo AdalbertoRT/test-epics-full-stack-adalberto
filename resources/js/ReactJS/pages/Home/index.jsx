@@ -3,13 +3,12 @@ import { UserContext } from "../../store/UserContext";
 import * as C from "../styles";
 import { HomeCards, HomeList } from "./style";
 
-import Menu from "../../components/Menu";
-import Brand from "../../components/Brand";
 import List from "../../components/List";
 import HeaderList from "../../components/HeaderList";
 import Cards from "../../components/Cards";
 import UserLogged from "../../components/UserLogged";
 import Aside from "../../components/Aside";
+import Main from "../../components/Main";
 
 const Home = () => {
     const { fetchCustomers, customers } = useContext(UserContext);
@@ -21,7 +20,7 @@ const Home = () => {
     return (
         <C.Container className="container row m-auto p-2 bg-white rounded">
             <Aside />
-            <C.Main className="col-10 rounded p-2">
+            <Main>
                 <HomeCards className="mb-2">
                     <Cards />
                 </HomeCards>
@@ -29,7 +28,7 @@ const Home = () => {
                     <HeaderList />
                     <List />
                 </HomeList>
-            </C.Main>
+            </Main>
         </C.Container>
     );
 };

@@ -23,7 +23,7 @@ class UserFactory extends Factory
             'email' => $this->faker->unique()->safeEmail(),
             // 'picture' => $this->faker->image(public_path('images'), 150, 150),
             // 'picture' => "https://source.unsplash.com/random/200x200?portrait",
-            'picture' => "https://source.unsplash.com/random/200x200?portrait",
+            'picture' => 'default.jpg',
             // 'picture' => fetch('https://source.unsplash.com/200x200/?portrait').then(response => response.blob().then(src => URL.createObjectURL(src));
             'phone_number' => $this->faker->phone(),
             'birthdate' => $this->faker->date($format = 'Y-m-d', $max = 'now'),

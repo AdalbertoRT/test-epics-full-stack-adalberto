@@ -27,7 +27,7 @@ Route::prefix('/')->group(function () {
         return view('welcome');
     });
     Route::prefix('customers/')->group(function () {
-        Route::get('edit', function () {
+        Route::get('edit/{id}', function () {
             return view('welcome');
         });
         Route::get('add', function () {

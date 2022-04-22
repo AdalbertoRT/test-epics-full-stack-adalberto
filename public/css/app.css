@@ -16,6 +16,10 @@ a {
   left: 25%;
 }
 
+.modal-backdrop {
+  display: none !important;
+}
+
 .userSelect {
   cursor: pointer;
 }

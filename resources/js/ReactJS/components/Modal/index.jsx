@@ -141,7 +141,7 @@ const Modal = ({ data }) => {
                                         </div>
                                         <div className="d-flex justify-content-evenly m-1">
                                             <Link
-                                                to="/customers/edit"
+                                                to={`/customers/edit/${data.id}`}
                                                 type="button"
                                                 className="btn btn-sm bg-info text p-0 px-1"
                                             >
@@ -297,8 +297,8 @@ const Modal = ({ data }) => {
                 <Alert
                     setAlert={setAlert}
                     customerId={data.id}
-                    type={"warning"}
-                    msg={"Delete this client?"}
+                    type="warning"
+                    msg="Delete this client?"
                     modal={modalRef}
                 />
             )}

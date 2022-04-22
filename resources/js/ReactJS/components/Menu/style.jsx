@@ -5,6 +5,10 @@ export const MenuComponent = styled.ul`
     width: 100%;
     margin-left: 5px;
     color: #777;
+
+    /* @media (max-width: 320px) {
+        display: none;
+    } */
 `;
 
 export const MenuItem = styled.li`

@@ -3,7 +3,7 @@ import { Dropdown, Pipe } from "./style";
 
 const Brand = () => {
     return (
-        <Dropdown className="dropdown">
+        <Dropdown className="dropdown ">
             <div className="pipes">
                 <Pipe opacity={0.25} />
                 <Pipe opacity={0.5} />

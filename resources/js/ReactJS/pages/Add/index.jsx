@@ -16,28 +16,19 @@ const Add = () => {
         ltv: 0.0,
         last_visit: "",
     };
-    const { dataAxios, addCustomer } = useContext(UserContext);
+    const { loading, dataAxios, addCustomer } = useContext(UserContext);
     const [formData, setFormData] = useState(defaultData);
     const [alert, setAlert] = useState(false);
-    const [load, setLoad] = useState(false);
-    const host = window.location.origin;
-    const port = window.location.port || "80";
 
-    const handleAdd = () => {
-        addCustomer(formData);
+    const handleAdd = async (e) => {
+        e.preventDefault();
 
+        await addCustomer(formData);
         setAlert(true);
-        setLoad(true);
         setTimeout(() => {
             setAlert(false);
-            setLoad(false);
         }, 2000);
     };
-
-    /*useEffect(() => {
-        console.log(formData);
-    }, [formData]);
-    */
 
     return (
         <>
@@ -47,24 +38,8 @@ const Add = () => {
                     <div className="bg-white rounded h-100 p-2">
                         <fieldset>
                             <legend>Add New Customer</legend>
-                            {/*<form id="addPicture" encType="multipart/form-data">
-                            <div className="mb-3">
-                                <label htmlFor="picture" className="form-label">
-                                    Picture
-                                </label>
-                                <input
-                                    type="file"
-                                    className="form-control"
-                                    id="picture"
-                                    name="picture"
-                                    onChange={(item) =>
-                                        setFormPicture(item.target.files[0])
-                                    }
-                                />
-                            </div>
-                                </form>*/}
                             <form
-                                id="addInfo"
+                                id="formAdd"
                                 onSubmit={handleAdd}
                                 encType="multipart/form-data"
                             >
@@ -299,9 +274,9 @@ const Add = () => {
                                     <button
                                         type="submit"
                                         className="btn btn-primary"
-                                        disabled={load ? "disabled" : ""}
+                                        disabled={loading ? "disabled" : ""}
                                     >
-                                        {!load ? "ADD CUSTOMER" : "WAIT..."}
+                                        {!loading ? "ADD CUSTOMER" : "WAIT..."}
                                     </button>
                                 </div>
                             </form>

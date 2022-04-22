@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
-use File;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 
 use Image;
@@ -43,10 +43,12 @@ class UserController extends Controller
         $rules = [
             "name" => "string|required|max:50",
             "email" => "string|required|unique:users,email|max:100",
-            "phone_number" => "max:11",
-            "gender" => "string|max:6",
+            "phone_number" => "max:|nullable",
+            'birthdate' => 'date|nullable',
+            "gender" => "string|max:6|nullable",
             "membership" => "string|max:3",
-            "ltv" => "numeric|required",
+            "ltv" => "numeric|nullable",
+            'last_visit' => 'date|nullable',
 
         ];
 
@@ -57,27 +59,18 @@ class UserController extends Controller
             return response()->json($array);
         }
 
-        //$data = $request->all();
-        $name = $request->input("name");
-        $email = $request->input("email");
-        $phone_number = $request->input("phone_number");
-        $birthdate = $request->input("birthdate");
-        $gender = $request->input("gender");
-        $membership = $request->input("membership");
-        $ltv = $request->input("ltv");
-        $last_visit = $request->input("last_visit");
+        $data = $request->all();
 
         //CRIANDO O REGISTRO
         $customer = new User();
-        $customer->name = $name;
-        $customer->email = $email;
-        //$customer->picture = $picture;
-        $customer->phone_number = $phone_number;
-        $customer->birthdate = $birthdate;
-        $customer->gender = $gender;
-        $customer->membership = $membership;
-        $customer->ltv = $ltv;
-        $customer->last_visit = $last_visit;
+        $customer->name = $data['name'];
+        $customer->email = $data['email'];
+        $customer->phone_number = $data['phone_number'];
+        $customer->birthdate = $data['birthdate'];
+        $customer->gender = $data['gender'];
+        $customer->membership = $data['membership'];
+        $customer->ltv = $data['ltv'];
+        $customer->last_visit = $data['last_visit'];
 
 
         //UPLOAD DE IMAGENS
@@ -85,12 +78,6 @@ class UserController extends Controller
             $picture = $request->file('picture');
             $imgName = $picture->hashName();
             $imgResize = Image::make($picture)->resize(300, 300);
-
-            // Storage::disk("public")->put(
-            //     "images/small/" . $imgName,
-            //     $imgSmall->encode()
-            // );
-
             $imgResize->save(public_path("images/customers/" . $imgName), 80);
             $customer->picture = $imgName;
         } else {
@@ -98,10 +85,10 @@ class UserController extends Controller
         }
 
         $customer->save();
-        $last_record = User::latest()->first();
+
         $array['msg'] = 'Customer added successfully!';
 
-        return $array;
+        return response()->json($array);
     }
 
     /**
@@ -110,41 +97,49 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
     public function showCustomerById($id)
     {
-        $array = ['error' => ''];
+        $array = ['msg' => ''];
 
-        $customer = User::where('id', $id)->get();
+        $customer = User::find($id);
+        if ($customer) {
+            $array['customers'] = $customer;
+        } else {
+            $array['error'] = "No customer to show with id" . $id;
+        }
 
-        $array['customer'] = $customer;
-        $array['countCustomers'] = $this->countCustomers();
-
-        return $array;
-
-        // $array = ["error" => ""];
-
-        // $product = Products::find($id);
-
-        // if ($product) {
-        //     $array["product"] = $product;
-        // } else {
-        //     $array["error"] = "O produto " . $id . " não existe!";
-        // }
-
-        // return response()->json($array);
+        return response()->json($array);
     }
+    /**
+     * Display the specified resource.
+     *
+     * @param  string  $name
+     * @return \Illuminate\Http\Response
+     */
 
     public function showCustomerByName($name)
     {
-        $array = ['error' => ''];
+        $array = ['msg' => ''];
 
         $customer = User::where('name', 'like', '%' . $name . '%')->get();
-        $array['customers'] = $customer;
+        if ($customer) {
+            $array['customers'] = $customer;
+        } else {
+            $array['msg'] = "No customer to show with name" . $name;
+        }
+
         $array['countCustomers'] = $this->countCustomers();
 
-        return $array;
-    }
 
+        return response()->json($array);
+    }
+    /**
+     * Display the specified resource.
+     *
+     * @param  string  $member
+     * @return \Illuminate\Http\Response
+     */
     public function showCustomerByMembers($member)
     {
         $array = ['error' => ''];
@@ -166,93 +161,76 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // $array = ["error" => "", "page" => "PRODUTO"];
+        $array = ["msg" => ''];
 
-        // //VALIDANDO
-        // $rules = [
-        //     "name" => "String",
-        //     "description" => "String",
-        //     "quantity" => "Integer|min:0",
-        //     "images" => "array|nullable",
-        //     "images.*" => "image|mimes:jpeg,png,jpg,gif,svg",
-        // ];
+        $customer = User::find($id);
 
-        // $validator = Validator::make($request->all(), $rules);
+        if ($customer) {
+            //VALIDANDO
+            $rules = [
+                "name" => "string|required|max:50",
+                "email" => "string|required|unique:users,email," . $customer->id . "|max:100",
+                "phone_number" => "max:11|nullable",
+                'birthdate' => 'date|nullable',
+                "gender" => "string|max:6|nullable",
+                "membership" => "string|max:3",
+                "ltv" => "numeric|nullable",
+                'last_visit' => 'date|nullable',
 
-        // if ($validator->fails()) {
-        //     return redirect()
-        //         ->route("product.show", ["id" => $id])
-        //         ->with("error", $validator->errors()->first());
-        // }
+            ];
 
-        // $name = $request->input("name");
-        // $description = $request->input("description");
-        // $price = $request->input("price");
-        // $quantity = $request->input("quantity");
+            $validator = Validator::make($request->all(), $rules);
 
-        // //ATUALIZANDO O ITEM
-        // $product = Products::find($id);
+            if ($validator->fails()) {
+                $array['error'] = $validator->errors()->first();
+                return response()->json($array);
+            }
 
-        // if ($product) {
-        //     if ($name) {
-        //         $product->name = $name;
-        //     }
-        //     if ($description) {
-        //         $product->description = $description;
-        //     }
-        //     if ($price) {
-        //         $product->price = $price;
-        //     }
-        //     if ($quantity) {
-        //         $product->quantity = $quantity;
-        //     }
+            $data = $request->all();
 
-        //     $product->save();
+            // //ATUALIZANDO O ITEM
+            if ($data['name']) {
+                $customer->name = $data['name'];
+            }
+            if ($data['email']) {
+                $customer->email = $data['email'];
+            }
+            if ($data['phone_number']) {
+                $customer->phone_number = $data['phone_number'];
+            }
+            if ($data['birthdate']) {
+                $customer->birthdate = $data['birthdate'];
+            }
+            if ($data['gender']) {
+                $customer->gender = $data['gender'];
+            }
+            if ($data['membership']) {
+                $customer->membership = $data['membership'];
+            }
+            if ($data['ltv']) {
+                $customer->ltv = $data['ltv'];
+            }
+            if ($data['last_visit']) {
+                $customer->last_visit = $data['last_visit'];
+            }
 
-        //     //UPLOAD DE IMAGENS
-        //     if ($request->hasfile("images")) {
-        //         // && $request->file('images')->isValid()){
-        //         $image = new ProductsImages();
-        //         $imgExtensions = ["jpg", "jpeg", "png", "gif"];
-        //         foreach ($request["images"] as $key => $file) {
-        //             if (
-        //                 in_array(
-        //                     $file->getClientOriginalExtension(),
-        //                     $imgExtensions
-        //                 )
-        //             ) {
-        //                 $imgName = $file->hashName();
-        //                 $imgSmall = Image::make($file)->resize(300, 300);
-        //                 $imgBig = Image::make($file)->resize(800, 800);
-        //                 Storage::disk("public")->put(
-        //                     "images/small/" . $imgName,
-        //                     $imgSmall->encode()
-        //                 );
-        //                 Storage::disk("public")->put(
-        //                     "images/big/" . $imgName,
-        //                     $imgBig->encode()
-        //                 );
-        //                 // $imgBig->save(public_path("img/products/big"), $imgName);
-        //                 $image->url = $imgName;
-        //                 $image->product_id = $product->id;
-        //                 $prodImg = $product->products_images
-        //                     ->where("cover", 1)
-        //                     ->first();
-        //                 if ($prodImg == null) {
-        //                     $image->cover = 1;
-        //                 }
-        //                 $image->save();
-        //             }
-        //         }
-        //     }
-        //     return redirect()
-        //         ->route("product.show", ["id" => $id])
-        //         ->with("msg", "Produto Atualizado com Sucesso!");
-        // } else {
-        //     return redirect()
-        //         ->route("product.show", ["id" => $id])
-        //         ->with("error", "Ocorreu um ERRO ao atualizar este produto.");
-        // }
+            //UPLOAD DE IMAGENS
+            if ($request->hasFile('picture') && $request->file('picture')->isValid()) {
+                $picture = $request->file('picture');
+                $imgName = $picture->hashName();
+                $imgResize = Image::make($picture)->resize(300, 300);
+                $imgResize->save(public_path("images/customers/" . $imgName), 80);
+                $customer->picture = $imgName;
+            }
+
+            $customer->save();
+
+            $array['msg'] = 'Customer updated successfully!';
+        } else {
+            $array['error'] = 'Customer not found!';
+        }
+
+        return response()->json($array);
     }
 
     /**
@@ -269,7 +247,10 @@ class UserController extends Controller
 
         if ($customer) {
             $picture = public_path("images/customers/$customer->picture");
-            if ($picture) unlink(public_path("images/customers/$customer->img"));
+            if (File::exists($picture)) {
+                File::delete($picture);
+                //unlink($image_path);
+            }
             $array['msg'] = `$customer->name client successfully deleted!`;
             $customer->delete();
         } else {

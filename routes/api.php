@@ -20,8 +20,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::prefix('/customers')->group(function () {
-    //DATA OF CUSTOMER BY ID
-    Route::get('{id}', [UserController::class, 'showCustomerById'])->name('showById');
+    //DATA OF CUSTOMER BY ID (for Edit)
+    Route::get('id/{id}', [UserController::class, 'showCustomerById'])->name('showById');
 
     //DATA OF CUSTOMER BY NAME
     Route::get('name/{name}', [UserController::class, 'showCustomerByName'])->name('showByName');
@@ -31,6 +31,9 @@ Route::prefix('/customers')->group(function () {
 
     //ADD CUSTOMER
     Route::post('new', [UserController::class, 'store'])->name('store');
+
+    //EDIT CUSTOMER
+    Route::put('edit/{id}', [UserController::class, 'update'])->name('update');
 
     //DELETE CUSTOMER
     Route::delete('delete/{id}', [UserController::class, 'destroy'])->name('delete');

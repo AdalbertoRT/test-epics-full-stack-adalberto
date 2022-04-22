@@ -79,7 +79,8 @@ const CustomersTable = () => {
                                                       "/images/customers/" +
                                                       el.picture
                                                     : host +
-                                                      "/images/default.jpg"
+                                                      "/images/" +
+                                                      el.picture
                                             }
                                             className="rounded-circle p-0 m-0 col-1"
                                             width="25"
