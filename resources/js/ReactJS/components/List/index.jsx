@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPhone } from "@fortawesome/free-solid-svg-icons";
 import { faEllipsis } from "@fortawesome/free-solid-svg-icons";
 import Modal from "../Modal";
-import { Col, Row, Th } from "./style";
+import { Col, Row, Table, Th } from "./style";
 import { UserContext } from "../../store/UserContext";
 
 const CustomersTable = () => {
@@ -34,7 +34,7 @@ const CustomersTable = () => {
 
     return (
         <>
-            <table className="table table-hover">
+            <Table className="table table-hover">
                 <thead>
                     <Row className="p-0">
                         <Th scope="col">
@@ -153,7 +153,7 @@ const CustomersTable = () => {
                             </Row>
                         ))}
                 </tbody>
-            </table>
+            </Table>
             <Modal data={customer} />
         </>
     );

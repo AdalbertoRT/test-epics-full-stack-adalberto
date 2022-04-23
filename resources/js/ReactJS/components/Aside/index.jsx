@@ -2,26 +2,15 @@ import React, { useState } from "react";
 import Brand from "../Brand";
 import Menu from "../Menu";
 import UserLogged from "../UserLogged";
+
 import { AsideComponent } from "./style";
 
 const Aside = () => {
-    const [showMenu, setShowMenu] = useState(false);
-
     return (
-        <AsideComponent className="col-2 col-sm-12 d-flex align-items-start flex-lg-column bd-highlight mb-3">
+        <AsideComponent className="col-12 m-0 p-0 col-lg-2 h-lg-100 d-flex align-items-start justify-content-between flex-lg-column mb-3">
             <Brand className="brand" />
-            <div className="d-flex flex-column">
-                <button
-                    className="btn btn-sm btn-secondary"
-                    type="button"
-                    onClick={(e) => setShowMenu(!e)}
-                >
-                    Menu
-                </button>
-
-                {showMenu && <Menu className="menu " />}
-            </div>
-            <div className="userLogged mt-auto p-2 bd-highlight">
+            <Menu />
+            <div className="userLogged mt-0 mt-lg-auto pb-3">
                 <UserLogged />
             </div>
         </AsideComponent>

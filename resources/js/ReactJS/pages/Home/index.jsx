@@ -18,7 +18,7 @@ const Home = () => {
     }, []);
 
     return (
-        <C.Container className="container row m-auto p-2 bg-white rounded">
+        <C.Container className="container d-flex flex-column flex-lg-row m-auto p-2 h-100 bg-white rounded">
             <Aside />
             <Main>
                 <HomeCards className="mb-2">

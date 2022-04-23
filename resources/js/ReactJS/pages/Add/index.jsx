@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import Aside from "../../components/Aside";
+import Main from "../../components/Main";
 import * as C from "../styles";
 import Alert from "../../components/Alert";
 import { UserContext } from "../../store/UserContext";
@@ -34,7 +35,7 @@ const Add = () => {
         <>
             <C.Container className="container row m-auto p-2 bg-white rounded">
                 <Aside />
-                <C.Main className="col-10 rounded p-2">
+                <Main className="col-10 rounded p-2">
                     <div className="bg-white rounded h-100 p-2">
                         <fieldset>
                             <legend>Add New Customer</legend>
@@ -282,7 +283,7 @@ const Add = () => {
                             </form>
                         </fieldset>
                     </div>
-                </C.Main>
+                </Main>
             </C.Container>
             {alert && dataAxios && (
                 <Alert

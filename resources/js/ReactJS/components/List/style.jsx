@@ -1,5 +1,34 @@
 import styled from "styled-components";
 
+export const Table = styled.table`
+    width: 100%;
+    background-color: #f3f3f3;
+    tbody {
+        height: 100%;
+        overflow-y: auto;
+        width: 100%;
+    }
+    thead,
+    tbody,
+    tr,
+    td,
+    th {
+        display: block;
+    }
+    tbody {
+        td {
+            float: left;
+        }
+    }
+    thead {
+        tr {
+            th {
+                float: left;
+            }
+        }
+    }
+`;
+
 export const Row = styled.tr`
     height: 30px;
     line-height: 30px;

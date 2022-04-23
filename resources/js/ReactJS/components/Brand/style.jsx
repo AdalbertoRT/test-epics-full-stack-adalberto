@@ -9,6 +9,10 @@ export const Dropdown = styled.div`
 
     .pipes {
         grid-area: 1/1/1/2;
+
+        @media (max-width: 500px) {
+            font-size: small;
+        }
     }
 
     button {
@@ -24,6 +28,10 @@ export const Dropdown = styled.div`
             font-weight: 700;
             color: tomato;
             margin: 0;
+
+            @media (max-width: 500px) {
+                font-size: small;
+            }
         }
 
         &::after {
@@ -42,6 +50,10 @@ export const Dropdown = styled.div`
         grid-area: 2/2/3/3;
         font-size: 0.6rem;
         color: #777;
+
+        @media (max-width: 500px) {
+            font-size: smaller;
+        }
     }
 `;
 

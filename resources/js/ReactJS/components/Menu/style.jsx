@@ -3,17 +3,13 @@ import styled from "styled-components";
 export const MenuComponent = styled.ul`
     position: relative;
     width: 100%;
-    margin-left: 5px;
     color: #777;
-
-    /* @media (max-width: 320px) {
-        display: none;
-    } */
 `;
 
 export const MenuItem = styled.li`
     font-size: 0.8rem;
     font-weight: 600;
+    width: 100%;
     height: 30px;
     padding: 0;
     display: flex;

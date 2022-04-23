@@ -1,5 +1,5 @@
 const mix = require("laravel-mix");
-require('dotenv').config();
+require("dotenv").config();
 
 /*
  |--------------------------------------------------------------------------
@@ -17,6 +17,6 @@ mix.js("resources/js/app.js", "public/js")
         "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
         "public/js/bootstrap.js"
     )
+    .js("resources/js/popper.js", "public/js")
     .sass("resources/sass/app.scss", "public/css")
     .sourceMaps();
-
