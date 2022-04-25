@@ -1,27 +1,55 @@
-# Testes
+# Teste-Epics-FullStack-Adalberto
 
-Neste repositório é possível encontrar os testes para vagas abertas no desenvolvimento da EPICS.
+Teste para vaga de desenvolvedor FullStack da EPICS.
 
-Você pode ver nossas vagas em aberto [aqui](https://vagas.epics.com.br).
+## Informações Importantes
 
-Após aprovado na etapa inicial acima, selecione o teste em questão e siga os passos do README em questão:
+1. Projeto desenvolvido em Laravel + Integração do ReactJS através do Laravel Mix.
 
--   [Teste de back-end](./tests/BACKEND.md)
--   [Teste de front-end](./tests/FRONTEND.md)
--   [Teste de full-stack](./tests/FULLSTACK.md)
+    - Verões das ferramentas:
+        - PHP: 8.1
+        - Composer: 2.3.5
+        - Laravel: 9.2
+        - React: 18.0
+        - Node: 17.9.0
+        - NPM: 8.5.5
+        - Bootstrap: 5.1.3,
+        - Laravel-mix: 6.0.6,
 
-Os testes devem ser iniciados a partir de um fork deste repositório o com o padrão de nome
+2. Banco de Dados em MySQL:
 
-`test-epics-<vaga>-<seu_nome>`
+    - MYSQL_VERSION = latest
+    - MYSQL_DATABASE = test-epics-fullstack-adalberto
+    - MYSQL_USER = default
+    - MYSQL_PASSWORD = secret
+    - MYSQL_PORT = 3306
+    - MYSQL_ROOT_PASSWORD=root
 
-Exemplo:
+3. Configurar .env conforme os serviços da máquina servidor.
+    - Exemplo de configuração do .env utilizando Docker (neste projeto foi utilizado Docker + Laradock como ambiente de desenvolvimento PHP + MySQL + NGINX.):
+        - DB_CONNECTION=mysql
+        - DB_HOST=mysql (colocar "127.0.0.1" para servidores locais como o do Composer)
+        - DB_PORT=3306
+        - DB_DATABASE=test-epics-fullstack-adalberto
+        - DB_USERNAME=default
+        - DB_PASSWORD=secret
+        - APP_URL=http://localhost
+        - NGINX_HOST_HTTP_PORT=80
 
-`test-epics-back-end-paulo`
+## Configurar Projeto
 
-Ao finalizar o teste, avise seu entrevistador!
+-   Necessário usar o Composer (No projeto foi usado o Composer versão 2.3.5);
 
----
+-   Criar o Banco de Dados MySQL com o nome: "test-epics-fullstack-adalberto", username: "default", password="secret" (ou configurar o .env de acordo com a conexão da máquina).
 
-Pegue sua xícara de café, inicie o seu teste e boa sorte!
+### Comandos - Passo a Passo
 
-![enter image description here](https://media.giphy.com/media/12XDYvMJNcmLgQ/giphy.gif)
+-   Em um terminal, entre na pasta do projeto e execute os seguintes comandos:
+
+1. $ composer update (para compilar o projeto)
+
+2. $ php artisan migrate (para criar as tabelas no banco de dados)
+
+3. $ php artisan db:seed (para popular com 10 registros aleatórios na tabela "users")
+
+Pronto!
