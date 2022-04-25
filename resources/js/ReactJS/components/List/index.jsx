@@ -53,7 +53,7 @@ const CustomersTable = () => {
                         </Row>
                     </thead>
                     <tbody>
-                        {data && data.customers?.length > 1 ? (
+                        {data && data.customers?.length > 0 ? (
                             data.customers?.map((el) => (
                                 <Row
                                     key={el.id}

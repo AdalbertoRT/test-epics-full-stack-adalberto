@@ -6,6 +6,7 @@ import { UserContext } from "../../store/UserContext";
 import { Link, useParams } from "react-router-dom";
 import { formatDate } from "../../helpers/formatDate";
 import Container from "../../components/Container";
+import InputMask from "react-input-mask";
 
 const Edit = () => {
     const params = useParams();
@@ -148,7 +149,8 @@ const Edit = () => {
                                         >
                                             Phone Number
                                         </label>
-                                        <input
+                                        <InputMask
+                                            mask="(99) 99999-9999"
                                             type="text"
                                             className="form-control"
                                             id="phone_number"
@@ -158,7 +160,10 @@ const Edit = () => {
                                                 setFormData({
                                                     ...formData,
                                                     phone_number:
-                                                        item.target.value,
+                                                        item.target.value.replace(
+                                                            /[^0-9]/g,
+                                                            ""
+                                                        ),
                                                 })
                                             }
                                         />

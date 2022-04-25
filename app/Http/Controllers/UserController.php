@@ -43,7 +43,7 @@ class UserController extends Controller
         $rules = [
             "name" => "string|required|max:50",
             "email" => "string|required|unique:users,email|max:100",
-            "phone_number" => "max:|nullable",
+            "phone_number" => "max:11|nullable",
             'birthdate' => 'date|nullable',
             "gender" => "string|max:6|nullable",
             "membership" => "string|max:3",

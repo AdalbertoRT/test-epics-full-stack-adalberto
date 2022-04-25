@@ -5,6 +5,7 @@ import Alert from "../../components/Alert";
 import { UserContext } from "../../store/UserContext";
 import Container from "../../components/Container";
 import { Link } from "react-router-dom";
+import InputMask from "react-input-mask";
 
 const Add = () => {
     const defaultData = {
@@ -42,6 +43,10 @@ const Add = () => {
             last_visit: "",
         });
     };
+
+    useEffect(() => {
+        console.log(formData);
+    }, [formData]);
 
     return (
         <>
@@ -147,7 +152,8 @@ const Add = () => {
                                         >
                                             Phone Number
                                         </label>
-                                        <input
+                                        <InputMask
+                                            mask="(99) 99999-9999"
                                             type="text"
                                             className="form-control"
                                             id="phone_number"
@@ -157,7 +163,10 @@ const Add = () => {
                                                 setFormData({
                                                     ...formData,
                                                     phone_number:
-                                                        item.target.value,
+                                                        item.target.value.replace(
+                                                            /[^0-9]/g,
+                                                            ""
+                                                        ),
                                                 })
                                             }
                                         />

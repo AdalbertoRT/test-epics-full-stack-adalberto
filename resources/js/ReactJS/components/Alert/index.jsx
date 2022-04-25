@@ -11,12 +11,13 @@ const Alert = ({ type, setAlert, msg, customerId = null, modal = null }) => {
         e.target.innerText = "Excluding...";
         await deleteCustomer(customerId);
         modal ?? modal.current.classList.remove("show");
-        alert("Customer successfully deleted!");
+        setAlert(true);
 
         setTimeout(() => {
             window.location.href = host;
             setAlert(false);
-        }, 3000);
+        }, 2000);
+        alert("Customer successfully deleted!");
     };
 
     return (
