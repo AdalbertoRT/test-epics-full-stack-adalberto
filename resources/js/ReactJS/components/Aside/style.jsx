@@ -4,6 +4,7 @@ export const AsideComponent = styled.aside`
     position: relative;
     padding-right: 5px;
     margin: 0 !important;
+    max-height: 100vh;
 
     @media (max-width: 550px) {
         font-size: x-small;

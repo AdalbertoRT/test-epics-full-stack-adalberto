@@ -2,31 +2,7 @@ import styled from "styled-components";
 
 export const Table = styled.table`
     width: 100%;
-    background-color: #f3f3f3;
-    tbody {
-        height: 100%;
-        overflow-y: auto;
-        width: 100%;
-    }
-    thead,
-    tbody,
-    tr,
-    td,
-    th {
-        display: block;
-    }
-    tbody {
-        td {
-            float: left;
-        }
-    }
-    thead {
-        tr {
-            th {
-                float: left;
-            }
-        }
-    }
+    height: 100%;
 `;
 
 export const Row = styled.tr`
@@ -42,6 +18,15 @@ export const Th = styled.th`
     font-size: 0.7rem;
     font-weight: bold;
     color: #333;
+
+    @media screen and (max-width: 425px) {
+        font-size: xx-small;
+        padding: 4px !important;
+    }
+    @media screen and (min-width: 426px) and (max-width: 768px) {
+        font-size: x-small;
+        padding: 4px !important;
+    }
 `;
 
 export const Col = styled.td`
@@ -51,6 +36,9 @@ export const Col = styled.td`
     font-size: 0.7rem;
     color: #333;
 
+    .name {
+        max-width: 150px;
+    }
     img {
         width: 25px !important;
         height: 25px !important;
@@ -78,5 +66,14 @@ export const Col = styled.td`
                 color: white !important;
             }
         }
+    }
+
+    @media screen and (max-width: 425px) {
+        font-size: xx-small;
+        padding: 4px !important;
+    }
+    @media screen and (min-width: 426px) and (max-width: 768px) {
+        font-size: x-small;
+        padding: 4px !important;
     }
 `;

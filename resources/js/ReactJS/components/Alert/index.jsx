@@ -13,16 +13,24 @@ const Alert = ({ type, setAlert, msg, customerId = null, modal = null }) => {
         modal ?? modal.current.classList.remove("show");
         alert("Customer successfully deleted!");
 
-        window.location.href = host;
-        setAlert(false);
+        setTimeout(() => {
+            window.location.href = host;
+            setAlert(false);
+        }, 3000);
     };
 
     return (
         <AlertComponent className="modal d-flex justify-content-center align-items-center">
             <div className="modal-dialog">
                 <div className="modal-content">
-                    <div className={`modal-header bg-${type} py-0`}>
-                        <h5 className="modal-title">{type?.toUpperCase()}!</h5>
+                    <div className={`modal-header bg-${type} py-1`}>
+                        <h5
+                            className={`modal-title fw-bolder ${
+                                type !== "warning" && "text-white"
+                            }`}
+                        >
+                            {type?.toUpperCase()}!
+                        </h5>
                         <button
                             type="button"
                             className="btn-close"

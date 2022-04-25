@@ -39,7 +39,7 @@ const Modal = ({ data }) => {
                                 aria-label="Close"
                             ></button>
                         </div>
-                        <ModalHeader className="modal-header">
+                        <ModalHeader className="modal-header d-flex flex-wrap gap-2 justify-content-around">
                             <ModalHeaderButton
                                 className={
                                     (button === "Overview"
@@ -122,7 +122,7 @@ const Modal = ({ data }) => {
                                 </div>
                                 <div className="info col">
                                     <div>
-                                        <strong className="d-flex flex-wrap">
+                                        <strong className="d-flex flex-wrap text-wrap">
                                             {data.name}
                                         </strong>
                                         <small>
@@ -139,16 +139,16 @@ const Modal = ({ data }) => {
                                                 Visited Today
                                             </small>
                                         </div>
-                                        <div className="d-flex justify-content-evenly m-1">
+                                        <div className="d-flex justify-content-between gap-3 m-1">
                                             <Link
                                                 to={`/customers/edit/${data.id}`}
                                                 type="button"
-                                                className="btn btn-sm bg-info text p-0 px-1"
+                                                className="btn btn-sm bg-info text p-0 px-1 col"
                                             >
                                                 Edit
                                             </Link>
                                             <button
-                                                className="btn btn-sm bg-danger p-0 px-1 text-white"
+                                                className="btn btn-sm bg-danger p-0 px-1 text-white col"
                                                 onClick={() => setAlert(true)}
                                             >
                                                 Delete

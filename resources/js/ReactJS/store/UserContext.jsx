@@ -1,6 +1,5 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import formatUrl from "../helpers/formatUrl";
 
 export const UserContext = React.createContext();
 
@@ -74,7 +73,7 @@ export const UserStorage = ({ children }) => {
     const fetchCustomerByMembers = async (member) => {
         setLoading(true);
         await axios
-            .get("http://localhost/api/members/" + member)
+            .get(`${host}:${port}/api/customers/members/${member}`)
             .then(
                 (response) => {
                     setCustomers(response.data);

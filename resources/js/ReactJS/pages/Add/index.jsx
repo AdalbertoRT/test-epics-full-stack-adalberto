@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useContext } from "react";
 import Aside from "../../components/Aside";
 import Main from "../../components/Main";
-import * as C from "../styles";
 import Alert from "../../components/Alert";
 import { UserContext } from "../../store/UserContext";
+import Container from "../../components/Container";
+import { Link } from "react-router-dom";
 
 const Add = () => {
     const defaultData = {
@@ -28,17 +29,37 @@ const Add = () => {
         setAlert(true);
         setTimeout(() => {
             setAlert(false);
-        }, 2000);
+        }, 3000);
+        setFormData({
+            name: "",
+            email: "",
+            picture: "",
+            phone_number: "",
+            birthdate: "",
+            gender: "others",
+            membership: "no",
+            ltv: "0.00",
+            last_visit: "",
+        });
     };
 
     return (
         <>
-            <C.Container className="container row m-auto p-2 bg-white rounded">
+            <Container className="container row m-auto p-2 bg-white rounded">
                 <Aside />
                 <Main className="col-10 rounded p-2">
                     <div className="bg-white rounded h-100 p-2">
                         <fieldset>
-                            <legend>Add New Customer</legend>
+                            <div className="d-flex justify-content-between">
+                                <legend>Add New Customer</legend>
+                                <Link
+                                    to={"/"}
+                                    type="button"
+                                    className="btn-close d-block d-lg-none"
+                                    aria-label="Close"
+                                ></Link>
+                            </div>
+
                             <form
                                 id="formAdd"
                                 onSubmit={handleAdd}
@@ -65,7 +86,7 @@ const Add = () => {
                                     />
                                 </div>
                                 <div className="mb-3 row">
-                                    <div className="col">
+                                    <div className="col-12 col-md-6 mb-3 mb-md-0">
                                         <label
                                             htmlFor="name"
                                             className="form-label"
@@ -87,7 +108,7 @@ const Add = () => {
                                             required
                                         />
                                     </div>
-                                    <div className="col">
+                                    <div className="col-12 col-md-6 mb-3 mb-md-0">
                                         <label
                                             htmlFor="email"
                                             className="form-label"
@@ -119,7 +140,7 @@ const Add = () => {
                                     </div>
                                 </div>
                                 <div className="mb-3 row">
-                                    <div className="col">
+                                    <div className="col-12 col-md-6 mb-3 mb-md-0">
                                         <label
                                             htmlFor="phone_number"
                                             className="form-label"
@@ -141,7 +162,7 @@ const Add = () => {
                                             }
                                         />
                                     </div>
-                                    <div className="col">
+                                    <div className="col-12 col-md-6 mb-3 mb-md-0">
                                         <label
                                             htmlFor="birthdate"
                                             className="form-label"
@@ -166,7 +187,7 @@ const Add = () => {
                                 </div>
 
                                 <div className="mb-3 row">
-                                    <div className="col">
+                                    <div className="col-12 col-md-6 mb-3 mb-md-0">
                                         <label
                                             htmlFor="gender"
                                             className="form-label"
@@ -195,7 +216,7 @@ const Add = () => {
                                             </option>
                                         </select>
                                     </div>
-                                    <div className="col">
+                                    <div className="col-12 col-md-6 mb-3 mb-md-0">
                                         <label
                                             htmlFor="membership"
                                             className="form-label"
@@ -224,7 +245,7 @@ const Add = () => {
                                 </div>
 
                                 <div className="mb-3 row">
-                                    <div className="col">
+                                    <div className="col-12 col-md-6 mb-3 mb-md-0">
                                         <label
                                             htmlFor="ltv"
                                             className="form-label"
@@ -247,7 +268,7 @@ const Add = () => {
                                             }
                                         />
                                     </div>
-                                    <div className="col">
+                                    <div className="col-12 col-md-6 mb-3 mb-md-0">
                                         <label
                                             htmlFor="last_visit"
                                             className="form-label"
@@ -279,12 +300,19 @@ const Add = () => {
                                     >
                                         {!loading ? "ADD CUSTOMER" : "WAIT..."}
                                     </button>
+                                    <Link
+                                        to={"/"}
+                                        type="button"
+                                        className="btn btn-light"
+                                    >
+                                        CANCEL
+                                    </Link>
                                 </div>
                             </form>
                         </fieldset>
                     </div>
                 </Main>
-            </C.Container>
+            </Container>
             {alert && dataAxios && (
                 <Alert
                     type={dataAxios.type}

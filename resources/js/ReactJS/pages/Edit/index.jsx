@@ -1,12 +1,11 @@
 import React, { useState, useEffect, useLayoutEffect, useContext } from "react";
 import Aside from "../../components/Aside";
 import Main from "../../components/Main";
-import * as C from "../styles";
 import Alert from "../../components/Alert";
 import { UserContext } from "../../store/UserContext";
-import { useParams } from "react-router-dom";
-import Loader from "../../components/List/loader";
-import formatDate from "../../helpers/formatDate";
+import { Link, useParams } from "react-router-dom";
+import { formatDate } from "../../helpers/formatDate";
+import Container from "../../components/Container";
 
 const Edit = () => {
     const params = useParams();
@@ -42,21 +41,25 @@ const Edit = () => {
         setAlert(true);
         setTimeout(() => {
             setAlert(false);
-        }, 2000);
+        }, 3000);
     };
-
-    useEffect(() => {
-        console.log(formData);
-    }, [formData]);
 
     return (
         <>
-            <C.Container className="container row m-auto p-2 bg-white rounded">
+            <Container className="container row m-auto p-2 bg-white rounded">
                 <Aside />
                 <Main className="col-10 rounded p-2">
                     <div className="bg-white rounded h-100 p-2">
                         <fieldset>
-                            <legend>Edit Customer</legend>
+                            <div className="d-flex justify-content-between">
+                                <legend>Edit Customer</legend>
+                                <Link
+                                    to={"/"}
+                                    type="button"
+                                    className="btn-close d-block d-lg-none"
+                                    aria-label="Close"
+                                ></Link>
+                            </div>
 
                             <form
                                 id="formAdd"
@@ -84,7 +87,7 @@ const Edit = () => {
                                     />
                                 </div>
                                 <div className="mb-3 row">
-                                    <div className="col">
+                                    <div className="col-12 col-md-6 mb-3 mb-md-0">
                                         <label
                                             htmlFor="name"
                                             className="form-label"
@@ -96,7 +99,7 @@ const Edit = () => {
                                             className="form-control"
                                             id="name"
                                             name="name"
-                                            value={formData.name}
+                                            value={formData.name || ""}
                                             onChange={(item) =>
                                                 setFormData({
                                                     ...formData,
@@ -106,7 +109,7 @@ const Edit = () => {
                                             required
                                         />
                                     </div>
-                                    <div className="col">
+                                    <div className="col-12 col-md-6 mb-3 mb-md-0">
                                         <label
                                             htmlFor="email"
                                             className="form-label"
@@ -119,7 +122,7 @@ const Edit = () => {
                                             id="email"
                                             name="email"
                                             aria-describedby="emailHelp"
-                                            value={formData.email}
+                                            value={formData.email || ""}
                                             onChange={(item) =>
                                                 setFormData({
                                                     ...formData,
@@ -138,7 +141,7 @@ const Edit = () => {
                                     </div>
                                 </div>
                                 <div className="mb-3 row">
-                                    <div className="col">
+                                    <div className="col-12 col-md-6 mb-3 mb-md-0 mb-sm-3">
                                         <label
                                             htmlFor="phone_number"
                                             className="form-label"
@@ -150,7 +153,7 @@ const Edit = () => {
                                             className="form-control"
                                             id="phone_number"
                                             name="phone_number"
-                                            value={formData.phone_number}
+                                            value={formData.phone_number || ""}
                                             onChange={(item) =>
                                                 setFormData({
                                                     ...formData,
@@ -160,7 +163,7 @@ const Edit = () => {
                                             }
                                         />
                                     </div>
-                                    <div className="col">
+                                    <div className="col-12 col-md-6 mb-3 mb-md-0">
                                         <label
                                             htmlFor="birthdate"
                                             className="form-label"
@@ -172,7 +175,7 @@ const Edit = () => {
                                             className="form-control"
                                             id="birthdate"
                                             name="birthdate"
-                                            value={formData.birthdate}
+                                            value={formData.birthdate || ""}
                                             onChange={(item) =>
                                                 setFormData({
                                                     ...formData,
@@ -185,7 +188,7 @@ const Edit = () => {
                                 </div>
 
                                 <div className="mb-3 row">
-                                    <div className="col">
+                                    <div className="col-12 col-md-6 mb-3 mb-md-0 mb-sm-3">
                                         <label
                                             htmlFor="gender"
                                             className="form-label"
@@ -197,7 +200,7 @@ const Edit = () => {
                                             id="gender"
                                             name="gender"
                                             aria-label="Default select example"
-                                            value={formData.gender}
+                                            value={formData.gender || "others"}
                                             onChange={(item) =>
                                                 setFormData({
                                                     ...formData,
@@ -214,7 +217,7 @@ const Edit = () => {
                                             </option>
                                         </select>
                                     </div>
-                                    <div className="col">
+                                    <div className="col-12 col-md-6 mb-3 mb-md-0">
                                         <label
                                             htmlFor="membership"
                                             className="form-label"
@@ -226,7 +229,7 @@ const Edit = () => {
                                             id="membership"
                                             name="membership"
                                             aria-label="Default select example"
-                                            value={formData.membership}
+                                            value={formData.membership || "no"}
                                             onChange={(item) =>
                                                 setFormData({
                                                     ...formData,
@@ -243,7 +246,7 @@ const Edit = () => {
                                 </div>
 
                                 <div className="mb-3 row">
-                                    <div className="col">
+                                    <div className="col-12 col-md-6 mb-3 mb-md-0 mb-sm-3">
                                         <label
                                             htmlFor="ltv"
                                             className="form-label"
@@ -256,7 +259,7 @@ const Edit = () => {
                                             className="form-control"
                                             id="ltv"
                                             name="ltv"
-                                            value={formData.ltv}
+                                            value={formData.ltv || "0.00"}
                                             onChange={(item) =>
                                                 setFormData({
                                                     ...formData,
@@ -267,7 +270,7 @@ const Edit = () => {
                                             }
                                         />
                                     </div>
-                                    <div className="col">
+                                    <div className="col-12 col-md-6 mb-3 mb-md-0">
                                         <label
                                             htmlFor="last_visit"
                                             className="form-label"
@@ -279,7 +282,7 @@ const Edit = () => {
                                             className="form-control"
                                             id="last_visit"
                                             name="last_visit"
-                                            value={formData.last_visit}
+                                            value={formData.last_visit || ""}
                                             onChange={(item) =>
                                                 setFormData({
                                                     ...formData,
@@ -301,12 +304,19 @@ const Edit = () => {
                                             ? "UPDATE CUSTOMER"
                                             : "WAIT..."}
                                     </button>
+                                    <Link
+                                        to={"/"}
+                                        type="button"
+                                        className="btn btn-light"
+                                    >
+                                        CANCEL
+                                    </Link>
                                 </div>
                             </form>
                         </fieldset>
                     </div>
                 </Main>
-            </C.Container>
+            </Container>
             {alert && dataAxios && (
                 <Alert
                     type={dataAxios.type}

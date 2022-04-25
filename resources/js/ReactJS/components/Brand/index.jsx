@@ -1,9 +1,14 @@
 import React from "react";
 import { Dropdown, Pipe } from "./style";
 
-const Brand = () => {
+const Brand = ({ show, setShow }) => {
+    const toggleBrand = (e) => {
+        // e.preventDefault();
+        setShow(!show);
+    };
+
     return (
-        <Dropdown className="dropdown d-flex">
+        <Dropdown className="dropdown d-flex" onClick={(e) => toggleBrand(e)}>
             <div className="pipes d-flex">
                 <Pipe opacity={0.25} />
                 <Pipe opacity={0.5} />
@@ -15,8 +20,6 @@ const Brand = () => {
                     className="btn btn-link dropdown-toggle btn-sm d-flex align-items-center col-auto"
                     type="button"
                     id="dropdownMenuButton1"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
                 >
                     <h1>Studio 813</h1>
                 </button>
