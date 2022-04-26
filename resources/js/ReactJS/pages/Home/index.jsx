@@ -11,6 +11,7 @@ import Container from "../../components/Container";
 
 const Home = () => {
     const { fetchCustomers, customers } = useContext(UserContext);
+    const [length, setLength] = useState(0);
 
     useEffect(() => {
         fetchCustomers();

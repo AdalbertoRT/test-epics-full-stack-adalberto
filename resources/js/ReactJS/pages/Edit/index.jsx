@@ -3,7 +3,7 @@ import Aside from "../../components/Aside";
 import Main from "../../components/Main";
 import Alert from "../../components/Alert";
 import { UserContext } from "../../store/UserContext";
-import { Link, useParams } from "react-router-dom";
+import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import { formatDate } from "../../helpers/formatDate";
 import Container from "../../components/Container";
 import InputMask from "react-input-mask";
@@ -15,18 +15,19 @@ const Edit = () => {
 
     useEffect(() => {
         fetchCustomerById(params.id);
+        window.scrollTo(0, 0);
     }, []);
 
     useLayoutEffect(() => {
-        if (customer)
+        if (customer?.customers)
             setFormData({
-                name: customer?.customers.name ?? "",
-                email: customer?.customers.email ?? "",
-                phone_number: customer?.customers.phone_number ?? "",
-                birthdate: customer?.customers.birthdate ?? "",
-                gender: customer?.customers.gender ?? "",
-                membership: customer?.customers.membership ?? "no",
-                ltv: customer?.customers.ltv ?? "0.00",
+                name: customer.customers.name ?? "",
+                email: customer.customers.email ?? "",
+                phone_number: customer.customers.phone_number ?? "",
+                birthdate: customer.customers.birthdate ?? "",
+                gender: customer.customers.gender ?? "",
+                membership: customer.customers.membership ?? "no",
+                ltv: customer.customers.ltv ?? "0.00",
                 last_visit: customer.customers.last_visit
                     ? formatDate(customer.customers.last_visit, "yyyy-mm-dd")
                     : "",
@@ -44,6 +45,8 @@ const Edit = () => {
             setAlert(false);
         }, 3000);
     };
+
+    if (customer?.error) return <Navigate to="/" />;
 
     return (
         <>

@@ -106,7 +106,7 @@ class UserController extends Controller
         if ($customer) {
             $array['customers'] = $customer;
         } else {
-            $array['error'] = "No customer to show with id" . $id;
+            $array['error'] = "No customer to show with id '$id'";
         }
 
         return response()->json($array);
@@ -126,7 +126,7 @@ class UserController extends Controller
         if ($customer) {
             $array['customers'] = $customer;
         } else {
-            $array['msg'] = "No customer to show with name" . $name;
+            $array['msg'] = "No customer to show with name $name";
         }
 
         $array['countCustomers'] = $this->countCustomers();
@@ -228,6 +228,7 @@ class UserController extends Controller
             $array['msg'] = 'Customer updated successfully!';
         } else {
             $array['error'] = 'Customer not found!';
+            return redirect()->route('nomatch')->with($array);
         }
 
         return response()->json($array);

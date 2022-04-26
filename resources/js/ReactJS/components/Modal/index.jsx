@@ -29,7 +29,7 @@ const Modal = ({ data }) => {
                 aria-hidden="true"
                 ref={modalRef}
             >
-                <div className="modal-dialog modal-dialog-centered rounded modalEffect">
+                <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable rounded modalEffect">
                     <div className="modal-content h-100">
                         <div className="modal-close w-100 d-flex justify-content-end mb-2">
                             <button
@@ -141,7 +141,7 @@ const Modal = ({ data }) => {
                                         </div>
                                         <div className="d-flex justify-content-between gap-3 m-1">
                                             <Link
-                                                to={`/customers/edit/${data.id}`}
+                                                to={`/customers/refresh/${data.id}`}
                                                 type="button"
                                                 className="btn btn-sm bg-info text p-0 px-1 col"
                                             >

@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { UserContext } from "../../store/UserContext";
 import { AlertComponent } from "./style";
+import { Alert as DelAlert } from "bootstrap";
 
 const Alert = ({ type, setAlert, msg, customerId = null, modal = null }) => {
     const { deleteCustomer, fetchCustomers } = useContext(UserContext);
@@ -11,12 +12,9 @@ const Alert = ({ type, setAlert, msg, customerId = null, modal = null }) => {
         e.target.innerText = "Excluding...";
         await deleteCustomer(customerId);
         modal ?? modal.current.classList.remove("show");
-        setAlert(true);
 
-        setTimeout(() => {
-            window.location.href = host;
-            setAlert(false);
-        }, 2000);
+        fetchCustomers();
+
         alert("Customer successfully deleted!");
     };
 

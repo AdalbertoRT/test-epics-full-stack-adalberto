@@ -45,8 +45,8 @@ const Add = () => {
     };
 
     useEffect(() => {
-        console.log(formData);
-    }, [formData]);
+        window.scrollTo(0, 0);
+    }, []);
 
     return (
         <>

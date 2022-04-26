@@ -1,15 +1,21 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { NomatchComponent } from "./style";
 
 const NoMatch = () => {
     return (
-        <div className="d-flex flex-column gap-4 rounded justify-content-center align-items-center w-100 h-100 bg-light">
-            <h1>PAGE NOT FOUND!</h1>
-            <h4>Error 404</h4>
-            <div>
-                <Link to="/">Return to Home</Link>
+        <NomatchComponent className="container rounded p-2 bg-light">
+            <div className="h-100 d-flex position-relative flex-column justify-content-between align-items-center gap-4 ">
+                <h1 className="text-light justify-self-start">PAGE</h1>
+
+                <Link
+                    className="justify-self-end lead display-6 mt-auto fw-bolder"
+                    to="/"
+                >
+                    Return to Home
+                </Link>
             </div>
-        </div>
+        </NomatchComponent>
     );
 };
 

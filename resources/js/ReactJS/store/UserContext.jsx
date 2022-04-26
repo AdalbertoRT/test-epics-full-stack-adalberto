@@ -122,7 +122,7 @@ export const UserStorage = ({ children }) => {
                     console.log(error);
                     setDataAxios({
                         msg: "Error. Try again later.",
-                        type: "warning",
+                        type: "danger",
                     });
                 }
             );
