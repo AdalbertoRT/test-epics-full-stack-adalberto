@@ -1,24 +1,24 @@
 import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../store/UserContext";
-import * as C from "../styles";
 import { HomeCards, HomeList } from "./style";
 
 import List from "../../components/List";
 import HeaderList from "../../components/HeaderList";
 import Cards from "../../components/Cards";
-import UserLogged from "../../components/UserLogged";
 import Aside from "../../components/Aside";
 import Main from "../../components/Main";
+import Container from "../../components/Container";
 
 const Home = () => {
     const { fetchCustomers, customers } = useContext(UserContext);
+    const [length, setLength] = useState(0);
 
     useEffect(() => {
         fetchCustomers();
     }, []);
 
     return (
-        <C.Container className="container d-flex flex-column flex-lg-row m-auto p-2 h-100 bg-white rounded">
+        <Container>
             <Aside />
             <Main>
                 <HomeCards className="mb-2">
@@ -26,10 +26,12 @@ const Home = () => {
                 </HomeCards>
                 <HomeList className="bg-white h-100 rounded p-2">
                     <HeaderList />
-                    <List />
+                    <div className="d-flex h-100 overflow-auto mt-2 mt-md-0">
+                        <List />
+                    </div>
                 </HomeList>
             </Main>
-        </C.Container>
+        </Container>
     );
 };
 

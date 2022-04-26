@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { UserContext } from "../../store/UserContext";
 import { AlertComponent } from "./style";
+import { Alert as DelAlert } from "bootstrap";
 
 const Alert = ({ type, setAlert, msg, customerId = null, modal = null }) => {
     const { deleteCustomer, fetchCustomers } = useContext(UserContext);
@@ -11,18 +12,24 @@ const Alert = ({ type, setAlert, msg, customerId = null, modal = null }) => {
         e.target.innerText = "Excluding...";
         await deleteCustomer(customerId);
         modal ?? modal.current.classList.remove("show");
-        alert("Customer successfully deleted!");
 
-        window.location.href = host;
-        setAlert(false);
+        fetchCustomers();
+
+        alert("Customer successfully deleted!");
     };
 
     return (
         <AlertComponent className="modal d-flex justify-content-center align-items-center">
             <div className="modal-dialog">
                 <div className="modal-content">
-                    <div className={`modal-header bg-${type} py-0`}>
-                        <h5 className="modal-title">{type?.toUpperCase()}!</h5>
+                    <div className={`modal-header bg-${type} py-1`}>
+                        <h5
+                            className={`modal-title fw-bolder ${
+                                type !== "warning" && "text-white"
+                            }`}
+                        >
+                            {type?.toUpperCase()}!
+                        </h5>
                         <button
                             type="button"
                             className="btn-close"

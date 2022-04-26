@@ -1,12 +1,20 @@
-function formatDate(date, format) {
+export function formatDate(date, format) {
+    const newDate = new Date(date);
     const map = {
-        mm: ((date.getMonth() + 1) < 10) ? '0' + (date.getMonth() + 1) : date.getMonth() + 1,
-        dd: date.getDate(),
-        aa: date.getFullYear().toString().slice(-2),
-        yyyy: date.getFullYear()
+        mm: ((newDate.getMonth() + 1) < 10) ? '0' + (newDate.getMonth() + 1) : newDate.getMonth() + 1,
+        dd: newDate.getDate(),
+        aa: newDate.getFullYear().toString().slice(-2),
+        yyyy: newDate.getFullYear()
     }
 
     return format.replace(/mm|dd|aa|yyyy/gi, matched => map[matched])
 }
 
-export default formatDate;
+export function formatDateString(date){
+    const newDate = new Date(date);
+    const string = newDate.toDateString();
+    const array = string.toString().split(" ");
+    array.shift();
+    const text = array.join(" ")
+    return text
+}
